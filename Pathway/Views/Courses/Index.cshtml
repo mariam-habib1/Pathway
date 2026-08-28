@@ -1,0 +1,52 @@
+﻿@model List<Pathway.ViewModels.CourseListItemViewModel>
+
+@{
+    ViewData["Title"] = "All Courses";
+}
+
+<h2>All Courses</h2>
+
+<form asp-action="Search" method="get" class="mb-3">
+    <input type="text" name="keyword" placeholder="Search courses..." />
+    <button type="submit">Search</button>
+</form>
+
+@if (User.IsInRole("Instructor"))
+{
+    <a asp-action="Create" class="btn btn-primary mb-3">+ Create New Course</a>
+}
+
+@if (!Model.Any())
+{
+    <p>No courses available yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Instructor</th>
+                <th>Price</th>
+                <th>Enrolled</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model)
+            {
+                <tr>
+                    <td>@course.Title</td>
+                    <td>@course.CategoryName</td>
+                    <td>@course.InstructorName</td>
+                    <td>@course.Price.ToString("C")</td>
+                    <td>@course.EnrollmentCount</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@course.CourseId">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

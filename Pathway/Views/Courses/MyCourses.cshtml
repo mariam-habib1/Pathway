@@ -1,0 +1,44 @@
+﻿@model List<Pathway.ViewModels.CourseListItemViewModel>
+
+@{
+    ViewData["Title"] = "My Courses";
+}
+
+<h2>My Courses</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Create New Course</a>
+
+@if (!Model.Any())
+{
+    <p>You haven't created any courses yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Enrolled</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model)
+            {
+                <tr>
+                    <td>@course.Title</td>
+                    <td>@course.CategoryName</td>
+                    <td>@course.Price.ToString("C")</td>
+                    <td>@course.EnrollmentCount</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@course.CourseId">View</a> |
+                        <a asp-action="Edit" asp-route-id="@course.CourseId">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@course.CourseId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
