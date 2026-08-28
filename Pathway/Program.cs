@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Pathway.Data;
+using Pathway.Repositories;
+using Pathway.Repositories.Interfaces;
+using Pathway.Services;
+using Pathway.Services.Interfaces;
 
 namespace Pathway
 {
@@ -15,6 +19,9 @@ namespace Pathway
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+            builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
 
             var app = builder.Build();
 
