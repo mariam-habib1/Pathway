@@ -1,5 +1,40 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<Pathway.ViewModels.CourseListItemViewModel>
+
 @{
+    ViewData["Title"] = "Courses by Category";
 }
+
+<h2>Courses in this Category</h2>
+
+@if (!Model.Any())
+{
+    <p>No courses found in this category.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Instructor</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model)
+            {
+                <tr>
+                    <td>@course.Title</td>
+                    <td>@course.InstructorName</td>
+                    <td>@course.Price.ToString("C")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@course.CourseId">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-action="Index">Back to all courses</a>

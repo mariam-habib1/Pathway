@@ -1,5 +1,47 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<Pathway.ViewModels.CourseListItemViewModel>
+
 @{
+    ViewData["Title"] = "Search Results";
 }
+
+<h2>Search Results</h2>
+
+<form asp-action="Search" method="get" class="mb-3">
+    <input type="text" name="keyword" placeholder="Search courses..." />
+    <button type="submit">Search</button>
+</form>
+
+@if (!Model.Any())
+{
+    <p>No courses found matching your search.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Instructor</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model)
+            {
+                <tr>
+                    <td>@course.Title</td>
+                    <td>@course.CategoryName</td>
+                    <td>@course.InstructorName</td>
+                    <td>@course.Price.ToString("C")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@course.CourseId">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-action="Index">Back to all courses</a>
