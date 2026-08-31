@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Pathway.Data;
+using Pathway.Repositories;
+using Pathway.Repositories.Interfaces;
+using Pathway.Services;
+using Pathway.Services.Interfaces;
 
 namespace Pathway
 {
@@ -23,6 +27,11 @@ namespace Pathway
                     options.LoginPath = "/Account/Login";
                     options.AccessDeniedPath = "/Account/AccessDenied";
                 });
+            builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+            builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
+            // Courses feature
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<ICourseService, CourseService>();
 
             var app = builder.Build();
 

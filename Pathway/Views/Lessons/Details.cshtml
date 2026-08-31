@@ -1,0 +1,61 @@
+@model Pathway.Models.Lesson
+
+@{
+    ViewData["Title"] = "Lesson Details";
+}
+
+<h1>Lesson Details</h1>
+
+<div>
+    <h4>Lesson</h4> <hr />
+
+    <dl class="row">
+
+        <dt class="col-sm-2">
+            Title
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Title
+        </dd>
+
+        <dt class="col-sm-2">
+            Content
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Content
+        </dd>
+
+        <dt class="col-sm-2">
+            Video URL
+        </dt>
+        <dd class="col-sm-10">
+            @Model.VideoUrl
+        </dd>
+
+        <dt class="col-sm-2">
+            Section
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.Section != null ? Model.Section.Title : "No Section")
+        </dd>
+
+        <dt class="col-sm-2">
+            Order
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Order
+        </dd>
+
+    </dl>
+
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.LessonId" class="btn btn-warning"> Edit </a>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Back to List
+    </a>
+
+</div>

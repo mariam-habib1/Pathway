@@ -1,0 +1,81 @@
+﻿@model Pathway.ViewModels.StudentDashboardViewModel
+
+@{
+    ViewData["Title"] = "My Courses";
+}
+
+<h2>My Dashboard</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="row text-center mb-4">
+    <div class="col-md-3 col-6 mb-3">
+        <div class="card p-3">
+            <h3>@Model.TotalCourses</h3>
+            <span>Total Courses</span>
+        </div>
+    </div>
+    <div class="col-md-3 col-6 mb-3">
+        <div class="card p-3">
+            <h3>@Model.CompletedCourses</h3>
+            <span>Completed</span>
+        </div>
+    </div>
+    <div class="col-md-3 col-6 mb-3">
+        <div class="card p-3">
+            <h3>@Model.InProgressCourses</h3>
+            <span>In Progress</span>
+        </div>
+    </div>
+    <div class="col-md-3 col-6 mb-3">
+        <div class="card p-3">
+            <h3>@Model.AverageProgress.ToString("0.#")%</h3>
+            <span>Average Progress</span>
+        </div>
+    </div>
+</div>
+
+<h4>My Enrolled Courses</h4>
+
+@if (!Model.Enrollments.Any())
+{
+    <p>You are not enrolled in any courses yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Instructor</th>
+                <th>Category</th>
+                <th>Progress</th>
+                <th>Enrolled At</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Enrollments)
+            {
+                <tr>
+                    <td>@item.CourseTitle</td>
+                    <td>@item.InstructorName</td>
+                    <td>@item.CategoryName</td>
+                    <td>@item.Progress%</td>
+                    <td>@item.EnrolledAt.ToString("dd MMM yyyy")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.EnrollmentId" class="btn btn-sm btn-primary">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
