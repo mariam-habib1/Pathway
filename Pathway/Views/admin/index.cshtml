@@ -1,0 +1,178 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="admin-dashboard">
+
+    <div class="dashboard-header">
+        <div>
+            <span class="dashboard-badge">ADMIN PANEL</span>
+
+            <h1>Welcome to Pathway 👋</h1>
+
+            <p>
+                Manage your learning platform from one place.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Statistics -->
+
+    <div class="stats-grid">
+
+        <div class="stat-box">
+            <div class="stat-icon">👥</div>
+
+            <h2>@ViewBag.UsersCount</h2>
+
+            <p>Total Users</p>
+        </div>
+
+
+        <div class="stat-box">
+            <div class="stat-icon">📚</div>
+
+            <h2>@ViewBag.CoursesCount</h2>
+
+            <p>Total Courses</p>
+        </div>
+
+
+        <div class="stat-box">
+            <div class="stat-icon">🏷️</div>
+
+            <h2>@ViewBag.CategoriesCount</h2>
+
+            <p>Total Categories</p>
+        </div>
+
+
+        <div class="stat-box">
+            <div class="stat-icon">🎓</div>
+
+            <h2>@ViewBag.EnrollmentsCount</h2>
+
+            <p>Total Enrollments</p>
+        </div>
+
+    </div>
+
+
+    <!-- Management -->
+
+    <div class="management-section">
+
+        <div class="section-title">
+            <span class="dashboard-badge">MANAGEMENT</span>
+
+            <h2>Platform Management</h2>
+
+            <p>
+                Control the main parts of your Pathway platform.
+            </p>
+        </div>
+
+
+        <div class="management-grid">
+
+            <!-- Users -->
+
+            <div class="admin-card">
+
+                <div class="card-icon">
+                    👥
+                </div>
+
+                <h3>Users</h3>
+
+                <p>
+                    View, edit and manage registered users.
+                </p>
+
+                <a asp-controller="Admin"
+                   asp-action="Users"
+                   class="card-link">
+
+                    Manage Users →
+                </a>
+
+            </div>
+
+
+            <!-- Courses -->
+
+            <div class="admin-card">
+
+                <div class="card-icon">
+                    📚
+                </div>
+
+                <h3>Courses</h3>
+
+                <p>
+                    Monitor and manage all platform courses.
+                </p>
+
+                <a asp-controller="Admin"
+                   asp-action="Courses"
+                   class="card-link">
+
+                    Manage Courses →
+                </a>
+
+            </div>
+
+
+            <!-- Categories -->
+
+            <div class="admin-card">
+
+                <div class="card-icon">
+                    🏷️
+                </div>
+
+                <h3>Categories</h3>
+
+                <p>
+                    Organize courses through categories.
+                </p>
+
+                <a asp-controller="Categories"
+                   asp-action="Index"
+                   class="card-link">
+
+                    Manage Categories →
+                </a>
+
+            </div>
+
+
+            <!-- Statistics -->
+
+            <div class="admin-card">
+
+                <div class="card-icon">
+                    📊
+                </div>
+
+                <h3>Statistics</h3>
+
+                <p>
+                    View an overview of platform activity.
+                </p>
+
+                <a asp-controller="Admin"
+                   asp-action="Statistics"
+                   class="card-link">
+
+                    View Statistics →
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

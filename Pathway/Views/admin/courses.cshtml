@@ -1,0 +1,172 @@
+@model IEnumerable<Pathway.Models.Course>
+
+@{
+    ViewData["Title"] = "Manage Courses";
+}
+
+<div class="admin-page">
+
+    <div class="page-header">
+
+        <div>
+
+            <span class="dashboard-badge">
+                ADMIN PANEL
+            </span>
+
+            <h1>
+                Manage Courses
+            </h1>
+
+            <p>
+                Monitor and manage all courses on Pathway.
+            </p>
+
+        </div>
+
+        <div class="page-count">
+            @Model.Count() Courses
+        </div>
+
+    </div>
+
+
+    <div class="table-card">
+
+        @if (!Model.Any())
+        {
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📚
+                </div>
+
+                <h2>
+                    No Courses Found
+                </h2>
+
+                <p>
+                    There are currently no courses available.
+                </p>
+
+            </div>
+        }
+        else
+        {
+            <div class="table-wrapper">
+
+                <table class="admin-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Course</th>
+
+                            <th>Price</th>
+
+                            <th>Instructor ID</th>
+
+                            <th>Category ID</th>
+
+                            <th>Created</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        @foreach (var course in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    #@course.CourseId
+                                </td>
+
+
+                                <td>
+
+                                    <div class="course-cell">
+
+                                        <div class="course-icon">
+                                            📖
+                                        </div>
+
+                                        <strong>
+                                            @course.Title
+                                        </strong>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="price">
+                                        $@course.Price
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+                                    #@course.InstructorId
+                                </td>
+
+
+                                <td>
+                                    #@course.CategoryId
+                                </td>
+
+
+                                <td>
+                                    @course.CreatedAt.ToString("dd MMM yyyy")
+                                </td>
+
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a asp-controller="Admin"
+                                           asp-action="CourseDetails"
+                                           asp-route-id="@course.CourseId"
+                                           class="action-btn">
+
+                                            View
+                                        </a>
+
+
+                                        <a asp-controller="Admin"
+                                           asp-action="DeleteCourse"
+                                           asp-route-id="@course.CourseId"
+                                           class="action-btn delete-btn">
+
+                                            Delete
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+
+    </div>
+
+</div>

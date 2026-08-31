@@ -1,0 +1,170 @@
+@model IEnumerable<Pathway.Models.User>
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<div class="admin-page">
+
+    <div class="page-header">
+
+        <div>
+            <span class="dashboard-badge">
+                ADMIN PANEL
+            </span>
+
+            <h1>Manage Users</h1>
+
+            <p>
+                View and manage all registered users.
+            </p>
+        </div>
+
+        <div class="page-count">
+            @Model.Count() Users
+        </div>
+
+    </div>
+
+
+    <div class="table-card">
+
+        @if (!Model.Any())
+        {
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    👥
+                </div>
+
+                <h2>No Users Found</h2>
+
+                <p>
+                    There are currently no registered users.
+                </p>
+
+            </div>
+        }
+        else
+        {
+            <div class="table-wrapper">
+
+                <table class="admin-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>User</th>
+
+                            <th>Email</th>
+
+                            <th>Role</th>
+
+                            <th>Created</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    <span class="id-text">
+                                        #@user.UserId
+                                    </span>
+                                </td>
+
+
+                                <td>
+
+                                    <div class="user-cell">
+
+                                        <div class="user-avatar">
+                                            @user.Name.Substring(0, 1).ToUpper()
+                                        </div>
+
+                                        <strong>
+                                            @user.Name
+                                        </strong>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    @user.Email
+                                </td>
+
+
+                                <td>
+
+                                    <span class="role-badge">
+                                        @user.Role
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+                                    @user.CreatedAt.ToString("dd MMM yyyy")
+                                </td>
+
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a asp-controller="Admin"
+                                           asp-action="UserDetails"
+                                           asp-route-id="@user.UserId"
+                                           class="action-btn">
+
+                                            View
+                                        </a>
+
+
+                                        <a asp-controller="Admin"
+                                           asp-action="EditUser"
+                                           asp-route-id="@user.UserId"
+                                           class="action-btn">
+
+                                            Edit
+                                        </a>
+
+
+                                        <a asp-controller="Admin"
+                                           asp-action="DeleteUser"
+                                           asp-route-id="@user.UserId"
+                                           class="action-btn delete-btn">
+
+                                            Delete
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+
+    </div>
+
+</div>

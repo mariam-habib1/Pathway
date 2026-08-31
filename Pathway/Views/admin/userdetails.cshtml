@@ -1,0 +1,106 @@
+@model Pathway.Models.User
+
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<div class="admin-page">
+
+    <div class="details-card">
+
+        <div class="details-top">
+
+            <div class="large-avatar">
+                @Model.Name.Substring(0, 1).ToUpper()
+            </div>
+
+            <div>
+
+                <span class="dashboard-badge">
+                    USER DETAILS
+                </span>
+
+                <h1>
+                    @Model.Name
+                </h1>
+
+                <span class="role-badge">
+                    @Model.Role
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+
+                <span>User ID</span>
+
+                <strong>
+                    #@Model.UserId
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>Email</span>
+
+                <strong>
+                    @Model.Email
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>Role</span>
+
+                <strong>
+                    @Model.Role
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>Account Created</span>
+
+                <strong>
+                    @Model.CreatedAt.ToString("dd MMMM yyyy")
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="details-actions">
+
+            <a asp-controller="Admin"
+               asp-action="EditUser"
+               asp-route-id="@Model.UserId"
+               class="btn-primary">
+
+                Edit User
+            </a>
+
+
+            <a asp-controller="Admin"
+               asp-action="Users"
+               class="btn-secondary">
+
+                ← Back to Users
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

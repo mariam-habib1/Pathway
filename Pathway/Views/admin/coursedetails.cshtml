@@ -1,0 +1,109 @@
+@model Pathway.Models.Course
+
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+<div class="admin-page">
+
+    <div class="details-card course-details-card">
+
+        <div class="course-details-icon">
+            📚
+        </div>
+
+        <span class="dashboard-badge">
+            COURSE DETAILS
+        </span>
+
+        <h1>
+            @Model.Title
+        </h1>
+
+        <p class="course-description">
+            @Model.Description
+        </p>
+
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+
+                <span>Course ID</span>
+
+                <strong>
+                    #@Model.CourseId
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>Price</span>
+
+                <strong>
+                    $@Model.Price
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>Instructor ID</span>
+
+                <strong>
+                    #@Model.InstructorId
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>Category ID</span>
+
+                <strong>
+                    #@Model.CategoryId
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>Created At</span>
+
+                <strong>
+                    @Model.CreatedAt.ToString("dd MMMM yyyy")
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="details-actions">
+
+            <a asp-controller="Admin"
+               asp-action="DeleteCourse"
+               asp-route-id="@Model.CourseId"
+               class="btn-danger">
+
+                Delete Course
+            </a>
+
+
+            <a asp-controller="Admin"
+               asp-action="Courses"
+               class="btn-secondary">
+
+                ← Back to Courses
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

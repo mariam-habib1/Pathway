@@ -1,0 +1,145 @@
+@model Pathway.Models.User
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<div class="admin-page">
+
+    <div class="form-card">
+
+        <div class="form-header">
+
+            <span class="dashboard-badge">
+                ADMIN PANEL
+            </span>
+
+            <h1>Edit User</h1>
+
+            <p>
+                Update the user's account information.
+            </p>
+
+        </div>
+
+
+        <form asp-controller="Admin"
+              asp-action="EditUser"
+              asp-route-id="@Model.UserId"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+
+            <div class="form-group">
+
+                <label for="name">
+                    Full Name
+                </label>
+
+                <input type="text"
+                       id="name"
+                       name="name"
+                       value="@Model.Name"
+                       class="form-control"
+                       required />
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input type="email"
+                       id="email"
+                       name="email"
+                       value="@Model.Email"
+                       class="form-control"
+                       required />
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="role">
+                    User Role
+                </label>
+
+                <select id="role"
+                        name="role"
+                        class="form-control"
+                        required>
+
+                    @if (Model.Role == "Student")
+                    {
+                        <option value="Student" selected>
+                            Student
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="Student">
+                            Student
+                        </option>
+                    }
+
+
+                    @if (Model.Role == "Instructor")
+                    {
+                        <option value="Instructor" selected>
+                            Instructor
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="Instructor">
+                            Instructor
+                        </option>
+                    }
+
+
+                    @if (Model.Role == "Admin")
+                    {
+                        <option value="Admin" selected>
+                            Admin
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="Admin">
+                            Admin
+                        </option>
+                    }
+
+                </select>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <button type="submit"
+                        class="btn-primary">
+
+                    Save Changes
+                </button>
+
+
+                <a asp-controller="Admin"
+                   asp-action="Users"
+                   class="btn-secondary">
+
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
