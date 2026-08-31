@@ -1,0 +1,47 @@
+﻿@model Pathway.ViewModels.EnrollmentViewModel
+
+@{
+    ViewData["Title"] = "Enrollment Details";
+}
+
+<h2>@Model.CourseTitle</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<dl class="row">
+    <dt class="col-sm-3">Instructor</dt>
+    <dd class="col-sm-9">@Model.InstructorName</dd>
+
+    <dt class="col-sm-3">Category</dt>
+    <dd class="col-sm-9">@Model.CategoryName</dd>
+
+    <dt class="col-sm-3">Price</dt>
+    <dd class="col-sm-9">@Model.Price.ToString("C")</dd>
+
+    <dt class="col-sm-3">Enrolled At</dt>
+    <dd class="col-sm-9">@Model.EnrolledAt.ToString("dd MMM yyyy")</dd>
+
+    <dt class="col-sm-3">Progress</dt>
+    <dd class="col-sm-9">@Model.Progress%</dd>
+</dl>
+
+<form asp-action="UpdateProgress" asp-route-id="@Model.EnrollmentId" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label for="Progress">Update Progress</label>
+        <input type="number" name="Progress" min="0" max="100" value="@Model.Progress" class="form-control" style="width: 120px;" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Save Progress</button>
+</form>
+
+<div class="mt-3">
+    <a asp-action="Cancel" asp-route-id="@Model.EnrollmentId" class="btn btn-danger">Cancel Enrollment</a>
+    <a asp-action="MyCourses" class="btn btn-secondary">Back to My Courses</a>
+</div>
