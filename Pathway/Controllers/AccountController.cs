@@ -1,21 +1,26 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
+using Pathway.Common;
 using Pathway.Data;
 using Pathway.Models;
 using Pathway.ViewModels.Account;
+using System.Security.Claims;
 
 namespace Pathway.Controllers
 {
     public class AccountController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly PasswordHasher<User> _passwordHasher;
 
         public AccountController(AppDbContext context)
         {
             _context = context;
+            _passwordHasher = new PasswordHasher<User>();
         }
 
         [HttpGet]
@@ -33,29 +38,31 @@ namespace Pathway.Controllers
                 return View(model);
             }
 
+            var normalizedEmail = model.Email.Trim().ToLower();
+
             var emailExists = await _context.Users
-                .AnyAsync(u => u.Email == model.Email);
+                .AnyAsync(u => u.Email.ToLower() == normalizedEmail);
 
             if (emailExists)
             {
-                ModelState.AddModelError("Email", "Email already exists.");
+                ModelState.AddModelError("Email", "البريد الإلكتروني مستخدم بالفعل");
                 return View(model);
             }
 
             var user = new User
             {
-                Name = model.Name,
-                Email = model.Email,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password),
-                Role = "Student",
-                CreatedAt = DateTime.Now
+                Name = model.Name.Trim(),
+                Email = normalizedEmail,
+                Role = Roles.Student,
+                CreatedAt = DateTime.UtcNow
             };
+
+            user.PasswordHash = _passwordHasher.HashPassword(user, model.Password);
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = "Account created successfully.";
-
+            TempData["SuccessMessage"] = "تم التسجيل بنجاح، من فضلك سجل الدخول";
             return RedirectToAction("Login");
         }
 
@@ -67,32 +74,31 @@ namespace Pathway.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(string email, string password)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Please enter email and password.");
-                return View();
+                return View(model);
             }
 
+            var normalizedEmail = model.Email.Trim().ToLower();
+
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == email);
+                .FirstOrDefaultAsync(u => u.Email.ToLower() == normalizedEmail);
 
             if (user == null)
             {
-                ModelState.AddModelError("", "Invalid email or password.");
-                return View();
+                ModelState.AddModelError(string.Empty, "الإيميل أو كلمة المرور غير صحيحة");
+                return View(model);
             }
 
-            bool passwordCorrect = BCrypt.Net.BCrypt.Verify(
-                password,
-                user.PasswordHash
-            );
+            var verificationResult = _passwordHasher.VerifyHashedPassword(
+                user, user.PasswordHash, model.Password);
 
-            if (!passwordCorrect)
+            if (verificationResult == PasswordVerificationResult.Failed)
             {
-                ModelState.AddModelError("", "Invalid email or password.");
-                return View();
+                ModelState.AddModelError(string.Empty, "الإيميل أو كلمة المرور غير صحيحة");
+                return View(model);
             }
 
             var claims = new List<Claim>
@@ -103,17 +109,21 @@ namespace Pathway.Controllers
                 new Claim(ClaimTypes.Role, user.Role)
             };
 
-            var identity = new ClaimsIdentity(
-                claims,
-                CookieAuthenticationDefaults.AuthenticationScheme
-            );
+            var claimsIdentity = new ClaimsIdentity(claims, "CookieAuth");
+            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-            var principal = new ClaimsPrincipal(identity);
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = model.RememberMe,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(model.RememberMe ? 14 : 1)
+            };
 
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                principal
-            );
+            await HttpContext.SignInAsync("CookieAuth", claimsPrincipal, authProperties);
+
+            if (user.Role == Roles.Admin)
+            {
+                return RedirectToAction("Index", "Admin");
+            }
 
             return RedirectToAction("Index", "Home");
         }
@@ -122,30 +132,17 @@ namespace Pathway.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme
-            );
-
-            return RedirectToAction("Index", "Home");
+            await HttpContext.SignOutAsync("CookieAuth");
+            return RedirectToAction("Login");
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-            if (!User.Identity?.IsAuthenticated ?? true)
-            {
-                return RedirectToAction("Login");
-            }
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "0");
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (userId == null)
-            {
-                return RedirectToAction("Login");
-            }
-
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.UserId == int.Parse(userId));
+            var user = await _context.Users.FindAsync(userId);
 
             if (user == null)
             {
