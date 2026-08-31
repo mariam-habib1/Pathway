@@ -1,0 +1,61 @@
+@model IEnumerable<Pathway.Models.Lesson>
+
+@{
+    ViewData["Title"] = "Lessons";
+}
+
+<h1>Lessons</h1>
+
+<p> <a asp-action="Create" class="btn btn-primary"> Create New Lesson </a> </p>
+
+<table class="table">
+    <thead> <tr> <th>Title</th> <th>Content</th> <th>Video</th> <th>Section</th> <th>Order</th> <th>Actions</th> </tr> </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+
+                <td>
+                    @item.Content
+                </td>
+
+                <td>
+                    @item.VideoUrl
+                </td>
+
+                <td>
+                    @(item.Section != null ? item.Section.Title : "No Section")
+                </td>
+
+                <td>
+                    @item.Order
+                </td>
+
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@item.LessonId"
+                       class="btn btn-sm btn-warning">
+                        Edit
+                    </a>
+
+                    <a asp-action="Details"
+                       asp-route-id="@item.LessonId"
+                       class="btn btn-sm btn-info">
+                        Details
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@item.LessonId"
+                       class="btn btn-sm btn-danger">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
