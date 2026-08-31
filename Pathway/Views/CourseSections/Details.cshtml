@@ -1,0 +1,52 @@
+﻿@model Pathway.Models.CourseSection
+
+@{
+    ViewData["Title"] = "Section Details";
+}
+
+<h1>Section Details</h1>
+
+<hr />
+
+<div>
+    <dl class="row">
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+
+        <dt class="col-sm-3">
+            Course
+        </dt>
+
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Course.Title)
+        </dd>
+
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Order)
+        </dt>
+
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Order)
+        </dd>
+
+    </dl>
+
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.SectionId" class="btn btn-warning"> Edit </a>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Back to List
+    </a>
+
+</div>

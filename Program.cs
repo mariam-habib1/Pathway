@@ -1,9 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Pathway.Data;
-using Pathway.Repositories;
-using Pathway.Repositories.Interfaces;
-using Pathway.Services;
-using Pathway.Services.Interfaces;
 
 namespace Pathway
 {
@@ -13,22 +9,21 @@ namespace Pathway
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
-            builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
-            // Courses feature
-            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
-            builder.Services.AddScoped<ICourseService, CourseService>();
+            builder.Services.AddAuthentication("CookieAuth")
+                .AddCookie("CookieAuth", options =>
+                {
+                    options.LoginPath = "/Account/Login";
+                    options.AccessDeniedPath = "/Account/AccessDenied";
+                });
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -38,6 +33,7 @@ namespace Pathway
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();

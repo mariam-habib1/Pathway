@@ -45,26 +45,6 @@ namespace Pathway.Migrations
                         .IsUnique();
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            CategoryId = 1,
-                            Description = "Build modern websites and web apps",
-                            Name = "Web Development"
-                        },
-                        new
-                        {
-                            CategoryId = 2,
-                            Description = "Protect systems and data from threats",
-                            Name = "Cyber Security"
-                        },
-                        new
-                        {
-                            CategoryId = 3,
-                            Description = "Machine learning and AI fundamentals",
-                            Name = "Artificial Intelligence"
-                        });
                 });
 
             modelBuilder.Entity("Pathway.Models.Course", b =>
@@ -104,68 +84,6 @@ namespace Pathway.Migrations
                     b.HasIndex("InstructorId");
 
                     b.ToTable("Courses");
-
-                    b.HasData(
-                        new
-                        {
-                            CourseId = 1,
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Learn to build full-stack web applications using ASP.NET Core MVC, Entity Framework, and SQL Server.",
-                            InstructorId = 1,
-                            Price = 499m,
-                            Title = "ASP.NET Core MVC from Scratch"
-                        },
-                        new
-                        {
-                            CourseId = 2,
-                            CategoryId = 2,
-                            CreatedAt = new DateTime(2026, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "A hands-on introduction to penetration testing, network security, and vulnerability assessment.",
-                            InstructorId = 2,
-                            Price = 699m,
-                            Title = "Ethical Hacking Essentials"
-                        },
-                        new
-                        {
-                            CourseId = 3,
-                            CategoryId = 3,
-                            CreatedAt = new DateTime(2026, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Understand the core concepts behind supervised and unsupervised learning with real datasets.",
-                            InstructorId = 2,
-                            Price = 599m,
-                            Title = "Machine Learning Foundations"
-                        },
-                        new
-                        {
-                            CourseId = 4,
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Build interactive user interfaces with React, hooks, and modern JavaScript.",
-                            InstructorId = 1,
-                            Price = 449m,
-                            Title = "React for Beginners"
-                        },
-                        new
-                        {
-                            CourseId = 5,
-                            CategoryId = 2,
-                            CreatedAt = new DateTime(2026, 2, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Learn firewalls, VPNs, and intrusion detection to secure enterprise networks.",
-                            InstructorId = 2,
-                            Price = 649m,
-                            Title = "Network Security Fundamentals"
-                        },
-                        new
-                        {
-                            CourseId = 6,
-                            CategoryId = 3,
-                            CreatedAt = new DateTime(2026, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Dive into neural networks, CNNs, and practical AI projects using PyTorch.",
-                            InstructorId = 2,
-                            Price = 749m,
-                            Title = "Deep Learning with Python"
-                        });
                 });
 
             modelBuilder.Entity("Pathway.Models.CourseSection", b =>
@@ -294,26 +212,6 @@ namespace Pathway.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 1,
-                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "ahmed.instructor@pathway.com",
-                            Name = "Ahmed Hassan",
-                            PasswordHash = "TEMP_HASH_1",
-                            Role = "Instructor"
-                        },
-                        new
-                        {
-                            UserId = 2,
-                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "salma.instructor@pathway.com",
-                            Name = "Salma Adel",
-                            PasswordHash = "TEMP_HASH_2",
-                            Role = "Instructor"
-                        });
                 });
 
             modelBuilder.Entity("Pathway.Models.Course", b =>
