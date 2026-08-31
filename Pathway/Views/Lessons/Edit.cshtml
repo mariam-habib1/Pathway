@@ -1,0 +1,94 @@
+@model Pathway.Models.Lesson
+
+@{
+ViewData["Title"] = "Edit Lesson";
+}
+
+<h1>Edit Lesson</h1>
+
+<h4>Lesson</h4>
+
+<hr />
+
+<div class="row"> <div class="col-md-6">
+
+    <form asp-action="Edit" method="post">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <input type="hidden" asp-for="LessonId" />
+
+        <div class="form-group mb-3">
+            <label asp-for="Title" class="control-label"></label>
+
+            <input asp-for="Title" class="form-control" />
+
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Content" class="control-label"></label>
+
+            <textarea asp-for="Content"
+                      class="form-control"
+                      rows="5"></textarea>
+
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="VideoUrl" class="control-label"></label>
+
+            <input asp-for="VideoUrl" class="form-control" />
+
+            <span asp-validation-for="VideoUrl" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="SectionId" class="control-label">
+                Section
+            </label>
+
+            <select asp-for="SectionId" class="form-control">
+
+                <option value="">-- Select Section --</option>
+
+                    @foreach (var item in ViewBag.Sections)
+                    {
+                        <option value="@item.SectionId">
+                            @item.Title
+                        </option>
+                    }
+
+            </select>
+
+            <span asp-validation-for="SectionId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Order" class="control-label"></label>
+
+            <input asp-for="Order"
+                   class="form-control"
+                   type="number"
+                   min="1" />
+
+            <span asp-validation-for="Order" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit"
+                   value="Save"
+                   class="btn btn-primary" />
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                Back to List
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+</div>

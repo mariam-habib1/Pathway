@@ -1,0 +1,38 @@
+﻿@model Pathway.ViewModels.CourseDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h2>@Model.Title</h2>
+<p><strong>Instructor:</strong> @Model.InstructorName</p>
+<p><strong>Category:</strong> @Model.CategoryName</p>
+<p><strong>Price:</strong> @Model.Price.ToString("C")</p>
+<p>@Model.Description</p>
+<p><strong>Enrolled Students:</strong> @Model.EnrollmentCount</p>
+
+<h4>Course Content</h4>
+@if (!Model.Sections.Any())
+{
+    <p>No sections added yet.</p>
+}
+else
+{
+    <ul>
+        @foreach (var sec in Model.Sections.OrderBy(s => s.Order))
+        {
+            <li>
+                <strong>@sec.Title</strong> (@sec.LessonCount lessons)
+            </li>
+        }
+    </ul>
+}
+
+@if (User.IsInRole("Student"))
+{
+    <form asp-controller="Enrollments" asp-action="Enroll" asp-route-courseId="@Model.CourseId" method="post">
+        <button type="submit" class="btn btn-success">Enroll in this Course</button>
+    </form>
+}
+
+<a asp-action="Index">Back to all courses</a>

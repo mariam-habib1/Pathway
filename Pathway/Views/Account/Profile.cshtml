@@ -1,12 +1,12 @@
-﻿@model Pathway.ViewModels.Admin.UserListItemViewModel
+﻿@model Pathway.Models.User
 
 @{
-    ViewData["Title"] = "تفاصيل المستخدم";
+    ViewData["Title"] = "الملف الشخصي";
 }
 
 <div class="row justify-content-center mt-5">
     <div class="col-md-6">
-        <h2 class="mb-4">تفاصيل المستخدم</h2>
+        <h2 class="mb-4">الملف الشخصي</h2>
 
         <table class="table table-bordered">
             <tr>
@@ -27,7 +27,8 @@
             </tr>
         </table>
 
-        <a asp-controller="Admin" asp-action="EditUser" asp-route-id="@Model.UserId" class="btn btn-warning">تعديل</a>
-        <a asp-controller="Admin" asp-action="Users" class="btn btn-secondary">الرجوع لقائمة المستخدمين</a>
+        <form asp-controller="Account" asp-action="Logout" method="post">
+            <button type="submit" class="btn btn-danger">تسجيل الخروج</button>
+        </form>
     </div>
 </div>

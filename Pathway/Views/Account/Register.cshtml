@@ -1,26 +1,65 @@
+@model Pathway.ViewModels.Account.RegisterViewModel
+
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "إنشاء حساب جديد";
 }
 
-<h2>Register</h2>
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <h2 class="mb-4">إنشاء حساب جديد</h2>
 
-@if (ViewBag.Error != null)
-{
-    <p style="color:red">@ViewBag.Error</p>
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
+        <form asp-controller="Account" asp-action="Register" method="post">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ConfirmPassword" class="form-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" type="password" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                تسجيل
+            </button>
+
+        </form>
+
+        <p class="mt-3">
+            عندك حساب بالفعل؟
+            <a asp-controller="Account" asp-action="Login">
+                تسجيل الدخول
+            </a>
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
-
-<form asp-controller="Account" asp-action="Register" method="post">
-    <div>
-        <label>Name</label>
-        <input type="text" name="name" />
-    </div>
-    <div>
-        <label>Email</label>
-        <input type="email" name="email" />
-    </div>
-    <div>
-        <label>Password</label>
-        <input type="password" name="password" />
-    </div>
-    <button type="submit">Register</button>
-</form>

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Pathway.Models.CourseSection>
+
+@{
+    ViewData["Title"] = "Course Sections";
+}
+
+<h1>Course Sections</h1>
+
+<p> <a asp-action="Create" class="btn btn-primary">Create New Section</a> </p>
+
+<table class="table">
+    <thead> <tr> <th> @Html.DisplayNameFor(model => model.Title) </th> <th> Course </th> <th> @Html.DisplayNameFor(model => model.Order) </th> <th>Actions</th> </tr> </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.Title)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order)
+                </td>
+
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@item.SectionId"
+                       class="btn btn-sm btn-warning">
+                        Edit
+                    </a>
+
+                    <a asp-action="Details"
+                       asp-route-id="@item.SectionId"
+                       class="btn btn-sm btn-info">
+                        Details
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@item.SectionId"
+                       class="btn btn-sm btn-danger">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
