@@ -14,6 +14,6 @@ namespace Pathway.Models
         [StringLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
         public string? Description { get; set; }
 
-        public ICollection<Course> Courses { get; set; }
+        public ICollection<Course>? Courses { get; set; }
     }
 }

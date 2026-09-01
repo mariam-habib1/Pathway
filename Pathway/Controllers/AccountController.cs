@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-using Microsoft.AspNetCore.Mvc;
-=======
-﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,18 +9,11 @@ using Pathway.Data;
 using Pathway.Models;
 using Pathway.ViewModels.Account;
 using System.Security.Claims;
->>>>>>> f1e4a01e10511b842e58af786386a5270e60d482
 
 namespace Pathway.Controllers
 {
     public class AccountController : Controller
     {
-<<<<<<< HEAD
-        [HttpGet]
-        public IActionResult Login(string? ReturnUrl = null)
-        {
-            ViewBag.ReturnUrl = ReturnUrl;
-=======
         private readonly AppDbContext _context;
         private readonly PasswordHasher<User> _passwordHasher;
 
@@ -36,25 +26,10 @@ namespace Pathway.Controllers
         [HttpGet]
         public IActionResult Register()
         {
->>>>>>> f1e4a01e10511b842e58af786386a5270e60d482
             return View();
         }
 
         [HttpPost]
-<<<<<<< HEAD
-        public IActionResult Login(string username, string password, string? ReturnUrl = null)
-        {
-            // مؤقتًا: أي Username و Password يدخلوا هيعملوا Login
-            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
-            {
-                if (!string.IsNullOrEmpty(ReturnUrl))
-                    return Redirect(ReturnUrl);
-
-                return RedirectToAction("Index", "Home");
-            }
-
-            ViewBag.Error = "Please enter username and password.";
-=======
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -159,29 +134,6 @@ namespace Pathway.Controllers
         {
             await HttpContext.SignOutAsync("CookieAuth");
             return RedirectToAction("Login");
-        }
-
-        [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> Profile()
-        {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "0");
-
-            var user = await _context.Users.FindAsync(userId);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
-        }
-
-        [HttpGet]
-        public IActionResult AccessDenied()
-        {
->>>>>>> f1e4a01e10511b842e58af786386a5270e60d482
-            return View();
         }
     }
 }
