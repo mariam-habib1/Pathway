@@ -9,7 +9,7 @@ namespace Pathway.Models
         [Required(ErrorMessage = "Course title is required")]
         [StringLength(200, MinimumLength = 2,
             ErrorMessage = "Title must be between 2 and 200 characters")]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         [StringLength(2000,
             ErrorMessage = "Description cannot exceed 2000 characters")]
@@ -20,12 +20,14 @@ namespace Pathway.Models
             ErrorMessage = "Price must be between 0 and 100000")]
         public decimal Price { get; set; }
 
+        [StringLength(500)]
+        public string? ImageUrl { get; set; }
+
         [Required]
         public int InstructorId { get; set; }
 
         [Required]
-        public int CategoryId { get; set; }   
-
+        public int CategoryId { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

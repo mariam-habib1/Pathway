@@ -20,6 +20,8 @@ namespace Pathway.ViewModels
         [Required]
         public int CategoryId { get; set; }
 
+        public string? ImageUrl { get; set; }
+
         public List<SelectListItemVM>? Categories { get; set; }
     }
 }

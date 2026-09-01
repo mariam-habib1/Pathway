@@ -40,6 +40,7 @@ namespace Pathway.Services
                 InstructorName = course.Instructor?.Name ?? "",
                 CreatedAt = course.CreatedAt,
                 EnrollmentCount = course.Enrollments?.Count ?? 0,
+                ImageUrl = course.ImageUrl,
                 Sections = course.Sections?
                     .OrderBy(s => s.Order)
                     .Select(s => new SectionSummaryVM
@@ -73,7 +74,8 @@ namespace Pathway.Services
                 Price = model.Price,
                 CategoryId = model.CategoryId,
                 InstructorId = instructorId,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                ImageUrl = model.ImageUrl
             };
 
             await _courseRepo.AddAsync(course);
@@ -108,6 +110,7 @@ namespace Pathway.Services
             course.Description = model.Description;
             course.Price = model.Price;
             course.CategoryId = model.CategoryId;
+            course.ImageUrl = model.ImageUrl;
 
             _courseRepo.Update(course);
             var saved = await _courseRepo.SaveChangesAsync();
@@ -139,7 +142,8 @@ namespace Pathway.Services
             CategoryName = c.Category?.Name ?? "",
             InstructorName = c.Instructor?.Name ?? "",
             EnrollmentCount = c.Enrollments?.Count ?? 0,
-            CreatedAt = c.CreatedAt
+            CreatedAt = c.CreatedAt,
+            ImageUrl = c.ImageUrl
         };
     }
 }

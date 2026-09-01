@@ -1,8 +1,27 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero">
+    <h1 class="display-5 fw-bold">Learn new skills, anytime, anywhere</h1>
+    <p class="lead">Explore courses taught by expert instructors and grow your career with Pathway.</p>
+    <a asp-controller="Courses" asp-action="Index" class="btn btn-light btn-lg mt-3">Browse Courses</a>
+</div>
+
+<div class="row text-center mb-5">
+    <div class="col-md-4">
+        <h3>📚</h3>
+        <h5>Wide Range of Courses</h5>
+        <p class="text-muted">From web development to cybersecurity and AI.</p>
+    </div>
+    <div class="col-md-4">
+        <h3>🎓</h3>
+        <h5>Expert Instructors</h5>
+        <p class="text-muted">Learn from people who work in the field.</p>
+    </div>
+    <div class="col-md-4">
+        <h3>📈</h3>
+        <h5>Track Your Progress</h5>
+        <p class="text-muted">Stay motivated as you complete each course.</p>
+    </div>
 </div>
