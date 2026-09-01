@@ -26,8 +26,8 @@ namespace Pathway
 
             // Cookie Authentication
             builder.Services
-                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
+                .AddAuthentication("CookieAuth")
+                .AddCookie("CookieAuth", options =>
                 {
                     options.LoginPath = "/Account/Login";
                     options.AccessDeniedPath = "/Home/AccessDenied";
