@@ -1,0 +1,68 @@
+@model Pathway.ViewModels.AdminDashboardViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="pw-page">
+    <div class="pw-page-header">
+        <div>
+            <h2>Admin Dashboard</h2>
+            <p class="pw-subtitle">Platform-wide overview.</p>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success mb-3">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger mb-3">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-2 col-6">
+            <div class="pw-mini-stat">
+                <div class="value">@Model.TotalUsers</div>
+                <div class="label">Total Users</div>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="pw-mini-stat">
+                <div class="value">@Model.TotalStudents</div>
+                <div class="label">Students</div>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="pw-mini-stat">
+                <div class="value">@Model.TotalInstructors</div>
+                <div class="label">Instructors</div>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="pw-mini-stat">
+                <div class="value">@Model.TotalCourses</div>
+                <div class="label">Courses</div>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="pw-mini-stat">
+                <div class="value">@Model.TotalCategories</div>
+                <div class="label">Categories</div>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="pw-mini-stat">
+                <div class="value">@Model.TotalEnrollments</div>
+                <div class="label">Enrollments</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2 flex-wrap">
+        <a asp-action="Users" class="pw-btn pw-btn-primary">Manage Users</a>
+        <a asp-action="Courses" class="pw-btn pw-btn-primary">Manage Courses</a>
+        <a asp-action="Statistics" class="pw-btn pw-btn-ghost">View Statistics</a>
+    </div>
+</div>

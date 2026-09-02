@@ -1,0 +1,45 @@
+@model List<Pathway.ViewModels.CourseViewModel>
+
+@{
+    var instructorName = Model.Any() ? Model.First().InstructorName : "Instructor";
+    ViewData["Title"] = $"{instructorName}'s Courses";
+}
+
+<div class="pw-page">
+    <div class="pw-page-header">
+        <div>
+            <h2>@instructorName's Courses</h2>
+            <p class="pw-subtitle">@Model.Count course(s)</p>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="pw-empty">This instructor has no courses yet.</div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var course in Model)
+            {
+                <div class="col-md-4">
+                    <a asp-action="Details" asp-route-id="@course.CourseId" class="text-decoration-none">
+                        <div class="pw-course-card">
+                            <div class="pw-course-image">
+                                @if (!string.IsNullOrWhiteSpace(course.ThumbnailUrl))
+                                {
+                                    <img src="@course.ThumbnailUrl" alt="@course.Title" />
+                                }
+                            </div>
+                            <div class="pw-course-body">
+                                <div class="pw-course-category">@course.CategoryName</div>
+                                <h5 class="mt-1 mb-2">@course.Title</h5>
+                                <div class="pw-course-price">@course.Price.ToString("C")</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+</div>

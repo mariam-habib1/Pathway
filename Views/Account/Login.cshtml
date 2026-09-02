@@ -1,0 +1,55 @@
+@model Pathway.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="pw-page">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="pw-page-header">
+                <div>
+                    <h2>Log in</h2>
+                    <p class="pw-subtitle">Welcome back — pick up where you left off.</p>
+                </div>
+            </div>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success mb-3">@TempData["SuccessMessage"]</div>
+            }
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="pw-card">
+                <form asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input asp-for="RememberMe" class="form-check-input" />
+                        <label asp-for="RememberMe" class="form-check-label"></label>
+                    </div>
+
+                    <button type="submit" class="pw-btn pw-btn-primary w-100">Log in</button>
+                </form>
+            </div>
+
+            <p class="text-center mt-3 text-muted">Don't have an account? <a asp-action="Register">Register here</a></p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

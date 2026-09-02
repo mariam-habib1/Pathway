@@ -1,0 +1,68 @@
+@model Pathway.ViewModels.CourseFormViewModel
+
+@{
+    ViewData["Title"] = "New Course";
+}
+
+<div class="pw-page">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="pw-page-header">
+                <div>
+                    <h2>New Course</h2>
+                    <p class="pw-subtitle">You'll add sections and lessons next.</p>
+                </div>
+            </div>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="pw-card">
+                <form asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label asp-for="Title"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description"></label>
+                        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ThumbnailUrl">Thumbnail Image URL</label>
+                        <input asp-for="ThumbnailUrl" class="form-control" placeholder="https://..." />
+                        <span asp-validation-for="ThumbnailUrl" class="text-danger"></span>
+                        <div class="form-text">Paste a link to an image. It'll be shown on course cards and the course page.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Price"></label>
+                        <input asp-for="Price" class="form-control" type="number" step="0.01" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="CategoryId"></label>
+                        <select asp-for="CategoryId" asp-items="Model.CategoryOptions" class="form-select">
+                            <option value="">-- Select a category --</option>
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="pw-btn pw-btn-primary">Create Course</button>
+                        <a asp-action="Index" class="pw-btn pw-btn-ghost">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

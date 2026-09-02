@@ -1,0 +1,48 @@
+@model Pathway.ViewModels.CourseSectionFormViewModel
+
+@{
+    ViewData["Title"] = "Edit Section";
+}
+
+<div class="pw-page">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="pw-page-header">
+                <div>
+                    <h2>Edit Section</h2>
+                </div>
+            </div>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="pw-card">
+                <form asp-action="Edit" asp-route-id="@Model.SectionId" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="SectionId" />
+                    <input type="hidden" asp-for="CourseId" />
+
+                    <div class="mb-3">
+                        <label asp-for="Title"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Order"></label>
+                        <input asp-for="Order" type="number" min="1" class="form-control" />
+                        <span asp-validation-for="Order" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="pw-btn pw-btn-primary">Save Changes</button>
+                        <a asp-action="Course" asp-route-courseId="@Model.CourseId" class="pw-btn pw-btn-ghost">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

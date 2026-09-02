@@ -1,0 +1,27 @@
+@model Pathway.ViewModels.LessonFormViewModel
+
+@{
+    ViewData["Title"] = "Delete Lesson";
+}
+
+<div class="pw-page">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="pw-page-header">
+                <div>
+                    <h2>Delete Lesson</h2>
+                </div>
+            </div>
+
+            <div class="pw-card">
+                <p>Are you sure you want to delete <strong>@Model.Title</strong>?</p>
+
+                <form asp-action="Delete" asp-route-id="@Model.LessonId" method="post" class="d-flex gap-2">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="pw-btn pw-btn-danger">Yes, Delete</button>
+                    <a asp-action="Section" asp-route-sectionId="@Model.SectionId" class="pw-btn pw-btn-ghost">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

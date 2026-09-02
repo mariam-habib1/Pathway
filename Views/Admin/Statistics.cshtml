@@ -1,0 +1,90 @@
+@model Pathway.ViewModels.AdminStatisticsViewModel
+
+@{
+    ViewData["Title"] = "Platform Statistics";
+}
+
+<div class="pw-page">
+    <div class="pw-page-header">
+        <div>
+            <h2>Platform Statistics</h2>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-2 col-6">
+            <div class="pw-mini-stat"><div class="value">@Model.TotalUsers</div><div class="label">Users</div></div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="pw-mini-stat"><div class="value">@Model.TotalStudents</div><div class="label">Students</div></div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="pw-mini-stat"><div class="value">@Model.TotalInstructors</div><div class="label">Instructors</div></div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="pw-mini-stat"><div class="value">@Model.TotalAdmins</div><div class="label">Admins</div></div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="pw-mini-stat"><div class="value">@Model.TotalCourses</div><div class="label">Courses</div></div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="pw-mini-stat"><div class="value">@Model.TotalEnrollments</div><div class="label">Enrollments</div></div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-6">
+            <div class="pw-card">
+                <p class="text-muted mb-1">Average Course Price</p>
+                <p class="fs-4 fw-bold mb-0 pw-mono">@Model.AverageCoursePrice.ToString("C")</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="pw-card">
+                <p class="text-muted mb-1">Average Student Progress</p>
+                <p class="fs-4 fw-bold mb-0 pw-mono">@Model.AverageProgress.ToString("0.#")%</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <h5 class="mb-3">Courses by Category</h5>
+            @if (!Model.CoursesByCategory.Any())
+            {
+                <div class="pw-empty">No categories yet.</div>
+            }
+            else
+            {
+                <div class="pw-card">
+                    @foreach (var cat in Model.CoursesByCategory)
+                    {
+                        <div class="d-flex justify-content-between py-2 border-bottom">
+                            <span>@cat.CategoryName</span>
+                            <span class="pw-mono">@cat.CourseCount</span>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+        <div class="col-md-6">
+            <h5 class="mb-3">Top Instructors</h5>
+            @if (!Model.TopInstructors.Any())
+            {
+                <div class="pw-empty">No instructors yet.</div>
+            }
+            else
+            {
+                <div class="pw-card">
+                    @foreach (var instructor in Model.TopInstructors)
+                    {
+                        <div class="d-flex justify-content-between py-2 border-bottom">
+                            <span>@instructor.InstructorName</span>
+                            <span class="text-muted">@instructor.CourseCount course(s)</span>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+@model List<Pathway.ViewModels.CourseViewModel>
+
+@{
+    ViewData["Title"] = "Manage Courses";
+}
+
+<div class="pw-page">
+    <div class="pw-page-header">
+        <div>
+            <h2>Manage Courses</h2>
+            <p class="pw-subtitle">@Model.Count course(s) on the platform</p>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success mb-3">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger mb-3">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="pw-card">
+        <table class="pw-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Instructor</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in Model)
+                {
+                    <tr>
+                        <td>@course.Title</td>
+                        <td>@course.InstructorName</td>
+                        <td>@course.CategoryName</td>
+                        <td class="pw-mono">@course.Price.ToString("C")</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <a asp-action="CourseDetails" asp-route-id="@course.CourseId" class="pw-btn pw-btn-primary pw-btn-sm">Details</a>
+                                <form asp-action="CourseDelete" asp-route-id="@course.CourseId" method="post" class="d-inline"
+                                      onsubmit="return confirm('Delete this course and all its sections/lessons/enrollments?');">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="pw-btn pw-btn-danger pw-btn-sm">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

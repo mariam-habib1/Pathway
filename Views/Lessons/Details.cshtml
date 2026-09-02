@@ -1,0 +1,36 @@
+@model Pathway.ViewModels.LessonDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="pw-page">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="pw-page-header">
+                <div>
+                    <p class="pw-subtitle mb-1">@Model.CourseTitle · @Model.SectionTitle</p>
+                    <h2>@Model.Title</h2>
+                </div>
+            </div>
+
+            <div class="pw-card">
+                @if (!string.IsNullOrWhiteSpace(Model.VideoUrl))
+                {
+                    <div class="ratio ratio-16x9 mb-3">
+                        <iframe src="@Model.VideoUrl" allowfullscreen></iframe>
+                    </div>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.Content))
+                {
+                    <div class="lesson-content">
+                        <p class="mb-0">@Model.Content</p>
+                    </div>
+                }
+            </div>
+
+            <a asp-action="Section" asp-route-sectionId="@Model.SectionId" class="pw-btn pw-btn-ghost mt-3">← Back to Lessons</a>
+        </div>
+    </div>
+</div>
