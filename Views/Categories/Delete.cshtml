@@ -1,0 +1,37 @@
+@model Pathway.ViewModels.CategoryDetailsViewModel
+
+@{
+    ViewData["Title"] = "Delete Category";
+}
+
+<div class="pw-page">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="pw-page-header">
+                <div>
+                    <h2>Delete Category</h2>
+                </div>
+            </div>
+
+            <div class="pw-card">
+                <p>Are you sure you want to delete <strong>@Model.Name</strong>?</p>
+
+                @if (Model.Courses.Any())
+                {
+                    <div class="alert alert-warning mb-0">
+                        This category still has @Model.Courses.Count course(s) assigned to it.
+                        You must reassign or delete those courses before deleting this category.
+                    </div>
+                }
+                else
+                {
+                    <form asp-action="Delete" asp-route-id="@Model.CategoryId" method="post" class="d-flex gap-2">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="pw-btn pw-btn-danger">Yes, Delete</button>
+                        <a asp-action="Index" class="pw-btn pw-btn-ghost">Cancel</a>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>

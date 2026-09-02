@@ -1,0 +1,219 @@
+@model List<Pathway.ViewModels.CourseViewModel>
+
+@{
+    ViewData["Title"] = "Pathway - Learn Anything, Teach Everything";
+    var categoryNames = Model.Select(c => c.CategoryName).Where(n => !string.IsNullOrWhiteSpace(n)).Distinct().Take(6).ToList();
+}
+
+<!-- ============================== HERO ============================== -->
+<section class="pw-hero">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <span class="pw-eyebrow">● Now enrolling</span>
+                <h1>Follow your own path to a new skill.</h1>
+                <p class="lead">
+                    Pathway connects you with instructors who've actually done the work &mdash;
+                    then tracks every step from your first lesson to your last.
+                </p>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a asp-controller="Courses" asp-action="Index" class="pw-btn pw-btn-primary">Browse Courses</a>
+                    <a asp-controller="Account" asp-action="Register" class="pw-btn pw-btn-ghost">Teach on Pathway</a>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <!-- Signature graphic: the literal "pathway" a learner walks, enroll -> certify -->
+                <svg class="pw-path-graphic" viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The four steps of a Pathway course: Enroll, Learn, Practice, Certify">
+                    <path d="M 40 220 C 120 220, 100 120, 180 120 S 260 40, 340 60 S 420 140, 440 70"
+                          fill="none" stroke="#4F5FF0" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" />
+
+                    <circle cx="40" cy="220" r="10" class="pw-path-node-fill" />
+                    <text x="40" y="248" text-anchor="middle" class="pw-path-step">STEP 1</text>
+                    <text x="40" y="264" text-anchor="middle" class="pw-path-label">Enroll</text>
+
+                    <circle cx="180" cy="120" r="10" class="pw-path-node" />
+                    <text x="180" y="100" text-anchor="middle" class="pw-path-step">STEP 2</text>
+                    <text x="180" y="146" text-anchor="middle" class="pw-path-label">Learn</text>
+
+                    <circle cx="340" cy="60" r="10" class="pw-path-node" />
+                    <text x="340" y="40" text-anchor="middle" class="pw-path-step">STEP 3</text>
+                    <text x="340" y="86" text-anchor="middle" class="pw-path-label">Practice</text>
+
+                    <circle cx="440" cy="70" r="12" class="pw-path-node-fill" />
+                    <text x="440" y="46" text-anchor="middle" class="pw-path-step">STEP 4</text>
+                    <text x="440" y="98" text-anchor="middle" class="pw-path-label">Certify</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================== CATEGORIES ============================== -->
+@if (categoryNames.Any())
+{
+    <section class="pw-categories">
+        <div class="container">
+            <div class="pw-categories-label">Popular categories on Pathway</div>
+            <div class="pw-pill-row">
+                @foreach (var name in categoryNames)
+                {
+                    <span class="pw-pill">@name</span>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- ============================== WHY PATHWAY ============================== -->
+<section class="pw-section">
+    <div class="container">
+        <div class="pw-section-head">
+            <h2>Built around how people actually learn</h2>
+            <p>No filler modules. No disappearing instructors. Just a clear path from where you are to where you want to be.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="pw-feature-card">
+                    <div class="pw-feature-icon">✓</div>
+                    <h4 class="h5">Practitioner-taught</h4>
+                    <p class="text-muted mb-0">Every instructor teaches from real, hands-on experience &mdash; not a script.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pw-feature-card">
+                    <div class="pw-feature-icon">↻</div>
+                    <h4 class="h5">Progress that's visible</h4>
+                    <p class="text-muted mb-0">Your dashboard tracks exactly how far you are in every course, lesson by lesson.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pw-feature-card">
+                    <div class="pw-feature-icon">◈</div>
+                    <h4 class="h5">Structured, not scattered</h4>
+                    <p class="text-muted mb-0">Courses are organized into sections and lessons so you always know what's next.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================== STATS ============================== -->
+<section class="pw-section pt-0">
+    <div class="container">
+        <div class="pw-stats">
+            <div class="row text-center g-4">
+                <div class="col-6 col-md-3">
+                    <div class="pw-stat-value">@Model.Count</div>
+                    <div class="pw-stat-label">Active Courses</div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="pw-stat-value">@categoryNames.Count</div>
+                    <div class="pw-stat-label">Categories</div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="pw-stat-value">@Model.Select(c => c.InstructorName).Distinct().Count()</div>
+                    <div class="pw-stat-label">Instructors</div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="pw-stat-value">24/7</div>
+                    <div class="pw-stat-label">Self-paced Access</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================== FEATURED COURSES ============================== -->
+<section class="pw-section pt-0">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-2">
+            <div>
+                <h2 class="mb-1">Featured courses</h2>
+                <p class="text-muted mb-0">Fresh on Pathway right now.</p>
+            </div>
+            <a asp-controller="Courses" asp-action="Index" class="pw-btn pw-btn-ghost">View all courses</a>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <p>No courses available yet. Check back soon!</p>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var course in Model)
+                {
+                    <div class="col-md-4">
+                        <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.CourseId" class="text-decoration-none">
+                            <div class="pw-course-card">
+                                <div class="pw-course-image">
+                                    @if (!string.IsNullOrWhiteSpace(course.ThumbnailUrl))
+                                    {
+                                        <img src="@course.ThumbnailUrl" alt="@course.Title" />
+                                    }
+                                </div>
+                                <div class="pw-course-body">
+                                    <div class="pw-course-category mb-2">@course.CategoryName</div>
+                                    <h5 class="mb-1">@course.Title</h5>
+                                    <p class="text-muted small mb-3">by @course.InstructorName</p>
+                                    <span class="pw-course-price">@course.Price.ToString("C")</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</section>
+
+<!-- ============================== TESTIMONIALS ============================== -->
+<section class="pw-section pt-0">
+    <div class="container">
+        <div class="pw-section-head">
+            <h2>What learners are saying</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="pw-testimonial">
+                    <div class="pw-testimonial-quote">"</div>
+                    <p>I finally finished a course instead of abandoning it halfway &mdash; the progress tracker kept me honest.</p>
+                    <div class="d-flex align-items-center gap-2 mt-3">
+                        <span class="pw-avatar">M</span>
+                        <div>
+                            <div class="fw-bold small">Mona K.</div>
+                            <div class="text-muted small">Student</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pw-testimonial">
+                    <div class="pw-testimonial-quote">"</div>
+                    <p>Setting up my first course took an afternoon. My students actually finish what I publish.</p>
+                    <div class="d-flex align-items-center gap-2 mt-3">
+                        <span class="pw-avatar">A</span>
+                        <div>
+                            <div class="fw-bold small">Ahmed S.</div>
+                            <div class="text-muted small">Instructor</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pw-testimonial">
+                    <div class="pw-testimonial-quote">"</div>
+                    <p>The section-by-section structure means I never lose my place, even coming back weeks later.</p>
+                    <div class="d-flex align-items-center gap-2 mt-3">
+                        <span class="pw-avatar">L</span>
+                        <div>
+                            <div class="fw-bold small">Laila R.</div>
+                            <div class="text-muted small">Student</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

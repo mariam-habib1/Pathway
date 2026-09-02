@@ -1,0 +1,126 @@
+﻿@model Pathway.ViewModels.CourseContentBuilderViewModel
+
+@{
+    ViewData["Title"] = "Add Course Content";
+}
+
+<div class="pw-page">
+    <div class="pw-page-header">
+        <div>
+            <h2>Add Content</h2>
+            <p class="pw-subtitle">@Model.CourseTitle</p>
+        </div>
+    </div>
+
+    <p class="text-muted mb-4">
+        Add one or more sections below. Each section can have one or more lessons with a title and an optional video link.
+        Leave a lesson's title empty to skip it.
+    </p>
+
+    <form asp-action="BuildContent" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="CourseId" value="@Model.CourseId" />
+
+        <div id="sectionsContainer"></div>
+
+        <button type="button" id="addSectionBtn" class="pw-btn pw-btn-ghost mb-4">+ Add Section</button>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="pw-btn pw-btn-primary">Save Content</button>
+            <a asp-action="Course" asp-route-courseId="@Model.CourseId" class="pw-btn pw-btn-ghost">I'll do this later</a>
+        </div>
+    </form>
+</div>
+
+<!-- Templates used by JS to clone new rows -->
+<template id="sectionTemplate">
+    <div class="pw-card section-block mb-3">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="flex-grow-1 me-2">
+                <label>Section Title</label>
+                <input type="text" class="form-control section-title-input" placeholder="e.g. Introduction" />
+            </div>
+            <button type="button" class="pw-btn pw-btn-danger pw-btn-sm remove-section-btn mt-4">Remove Section</button>
+        </div>
+
+        <label class="mb-2">Lessons</label>
+        <div class="lessons-container"></div>
+
+        <button type="button" class="pw-btn pw-btn-ghost pw-btn-sm add-lesson-btn mt-2">+ Add Lesson</button>
+    </div>
+</template>
+
+<template id="lessonTemplate">
+    <div class="row g-2 align-items-end lesson-row mb-2">
+        <div class="col-md-5">
+            <input type="text" class="form-control lesson-title-input" placeholder="Lesson title" />
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control lesson-video-input" placeholder="Video URL (optional)" />
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="pw-btn pw-btn-danger pw-btn-sm remove-lesson-btn">✕</button>
+        </div>
+    </div>
+</template>
+
+@section Scripts {
+    <script>
+        const sectionsContainer = document.getElementById('sectionsContainer');
+        const sectionTemplate = document.getElementById('sectionTemplate');
+        const lessonTemplate = document.getElementById('lessonTemplate');
+
+        function addLessonRow(lessonsContainer) {
+            const clone = lessonTemplate.content.cloneNode(true);
+            lessonsContainer.appendChild(clone);
+            reindex();
+        }
+
+        function addSectionBlock() {
+            const clone = sectionTemplate.content.cloneNode(true);
+            sectionsContainer.appendChild(clone);
+            const newSection = sectionsContainer.lastElementChild;
+            addLessonRow(newSection.querySelector('.lessons-container'));
+            reindex();
+        }
+
+        function reindex() {
+            const sections = sectionsContainer.querySelectorAll('.section-block');
+            sections.forEach((sectionEl, sIdx) => {
+                sectionEl.querySelector('.section-title-input').name = `Sections[${sIdx}].Title`;
+                const lessonRows = sectionEl.querySelectorAll('.lesson-row');
+                lessonRows.forEach((lessonEl, lIdx) => {
+                    lessonEl.querySelector('.lesson-title-input').name = `Sections[${sIdx}].Lessons[${lIdx}].Title`;
+                    lessonEl.querySelector('.lesson-video-input').name = `Sections[${sIdx}].Lessons[${lIdx}].VideoUrl`;
+                });
+            });
+        }
+
+        document.getElementById('addSectionBtn').addEventListener('click', addSectionBlock);
+
+        sectionsContainer.addEventListener('click', function(e) {
+            if (e.target.classList.contains('add-lesson-btn')) {
+                const lessonsContainer = e.target.closest('.section-block').querySelector('.lessons-container');
+                addLessonRow(lessonsContainer);
+            }
+            if (e.target.classList.contains('remove-lesson-btn')) {
+                const row = e.target.closest('.lesson-row');
+                const lessonsContainer = row.parentElement;
+                if (lessonsContainer.querySelectorAll('.lesson-row').length > 1) {
+                    row.remove();
+                    reindex();
+                }
+            }
+            if (e.target.classList.contains('remove-section-btn')) {
+                if (sectionsContainer.querySelectorAll('.section-block').length > 1) {
+                    e.target.closest('.section-block').remove();
+                    reindex();
+                }
+            }
+        });
+
+        // Start with one section pre-added
+        addSectionBlock();
+    </script>
+}
+

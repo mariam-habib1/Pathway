@@ -1,0 +1,768 @@
+﻿/* =====================================================================
+   Pathway — Brand Stylesheet
+   Palette:  Indigo #4F5FF0 (primary) / Deep Navy #0B0F2B (dark sections)
+             Lavender tint #F4F6FF (section bg) / Ink #1B1F3B (text)
+             Slate #5A6282 (muted text) / Progress Green #16A34A
+   Type:     Plus Jakarta Sans (display) · Inter (body) · IBM Plex Mono (data)
+   ===================================================================== */
+
+:root {
+    --pw-primary: #4F5FF0;
+    --pw-primary-dark: #3A46C4;
+    --pw-primary-tint: #EEF0FF;
+    --pw-navy: #0B0F2B;
+    --pw-navy-soft: #141B42;
+    --pw-bg-tint: #F4F6FF;
+    --pw-ink: #1B1F3B;
+    --pw-slate: #5A6282;
+    --pw-border: #E3E7FB;
+    --pw-green: #16A34A;
+    --pw-white: #FFFFFF;
+    --pw-radius: 16px;
+    --pw-radius-sm: 10px;
+    --pw-shadow: 0 20px 40px -20px rgba(15, 23, 65, 0.18);
+    --pw-shadow-sm: 0 8px 20px -10px rgba(15, 23, 65, 0.15);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--pw-ink);
+    background: var(--pw-white);
+    line-height: 1.55;
+}
+
+h1, h2, h3, h4, .pw-display {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    color: var(--pw-ink);
+    letter-spacing: -0.02em;
+}
+
+.pw-mono {
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+a {
+    text-decoration: none;
+}
+
+:focus-visible {
+    outline: 3px solid var(--pw-primary);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------
+   Navbar
+   --------------------------------------------------------------------- */
+.pw-navbar {
+    background: var(--pw-white);
+    border-bottom: 1px solid var(--pw-border);
+    padding: 14px 0;
+}
+
+.pw-brand {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--pw-ink) !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pw-brand-mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--pw-primary), #7C8CFF);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.95rem;
+}
+
+.pw-nav-link {
+    color: var(--pw-slate) !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 8px 14px !important;
+    border-radius: var(--pw-radius-sm);
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+    .pw-nav-link:hover {
+        background: var(--pw-primary-tint);
+        color: var(--pw-primary-dark) !important;
+    }
+
+.pw-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.pw-btn-primary {
+    background: var(--pw-primary);
+    color: white !important;
+    box-shadow: var(--pw-shadow-sm);
+}
+
+    .pw-btn-primary:hover {
+        background: var(--pw-primary-dark);
+        transform: translateY(-1px);
+    }
+
+.pw-btn-ghost {
+    background: transparent;
+    color: var(--pw-ink) !important;
+    border: 1.5px solid var(--pw-border);
+}
+
+    .pw-btn-ghost:hover {
+        border-color: var(--pw-primary);
+        color: var(--pw-primary) !important;
+    }
+
+.pw-btn-dark {
+    background: var(--pw-white);
+    color: var(--pw-navy) !important;
+}
+
+    .pw-btn-dark:hover {
+        background: var(--pw-bg-tint);
+    }
+
+.pw-btn-danger {
+    background: #FDECEC;
+    color: #B42318 !important;
+}
+
+    .pw-btn-danger:hover {
+        background: #FBD9D9;
+    }
+
+.pw-btn-sm {
+    padding: 6px 16px;
+    font-size: 0.85rem;
+}
+
+/* ---------------------------------------------------------------------
+   Hero + signature "learning path" graphic
+   --------------------------------------------------------------------- */
+.pw-hero {
+    background: linear-gradient(180deg, var(--pw-bg-tint) 0%, #FFFFFF 100%);
+    padding: 72px 0 48px;
+}
+
+.pw-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--pw-primary-tint);
+    color: var(--pw-primary-dark);
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+}
+
+.pw-hero h1 {
+    font-size: clamp(2.1rem, 4vw, 3.4rem);
+    line-height: 1.08;
+    margin-bottom: 20px;
+}
+
+.pw-hero p.lead {
+    color: var(--pw-slate);
+    font-size: 1.1rem;
+    max-width: 480px;
+    margin-bottom: 28px;
+}
+
+.pw-path-graphic {
+    width: 100%;
+    height: auto;
+}
+
+.pw-path-node {
+    fill: white;
+    stroke: var(--pw-primary);
+    stroke-width: 2.5;
+}
+
+.pw-path-node-fill {
+    fill: var(--pw-primary);
+}
+
+.pw-path-label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    fill: var(--pw-ink);
+}
+
+.pw-path-step {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    fill: var(--pw-primary-dark);
+}
+
+/* ---------------------------------------------------------------------
+   Category pill strip
+   --------------------------------------------------------------------- */
+.pw-categories {
+    padding: 36px 0;
+    border-top: 1px solid var(--pw-border);
+    border-bottom: 1px solid var(--pw-border);
+}
+
+.pw-categories-label {
+    text-align: center;
+    color: var(--pw-slate);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+}
+
+.pw-pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.pw-pill {
+    background: var(--pw-bg-tint);
+    color: var(--pw-ink);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--pw-border);
+}
+
+/* ---------------------------------------------------------------------
+   Feature cards ("Why Pathway")
+   --------------------------------------------------------------------- */
+.pw-section {
+    padding: 64px 0;
+}
+
+.pw-section-head {
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto 40px;
+}
+
+    .pw-section-head p {
+        color: var(--pw-slate);
+    }
+
+.pw-feature-card {
+    background: var(--pw-white);
+    border: 1px solid var(--pw-border);
+    border-radius: var(--pw-radius);
+    padding: 28px;
+    height: 100%;
+}
+
+.pw-feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--pw-primary-tint);
+    color: var(--pw-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 1.2rem;
+}
+
+/* ---------------------------------------------------------------------
+   Stats band
+   --------------------------------------------------------------------- */
+.pw-stats {
+    background: var(--pw-navy);
+    color: white;
+    padding: 48px 0;
+    border-radius: var(--pw-radius);
+}
+
+.pw-stat-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: white;
+}
+
+.pw-stat-label {
+    color: #A8B0E0;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* ---------------------------------------------------------------------
+   Course cards
+   --------------------------------------------------------------------- */
+.pw-course-card {
+    border: 1px solid var(--pw-border);
+    border-radius: var(--pw-radius);
+    overflow: hidden;
+    height: 100%;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+    background: white;
+}
+
+    .pw-course-card:hover {
+        box-shadow: var(--pw-shadow);
+        transform: translateY(-2px);
+    }
+
+.pw-course-thumb {
+    height: 8px;
+    background: linear-gradient(90deg, var(--pw-primary), #7C8CFF);
+}
+
+.pw-course-image {
+    height: 160px;
+    background: linear-gradient(135deg, var(--pw-primary), #7C8CFF);
+}
+
+    .pw-course-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+.pw-course-banner {
+    width: 100%;
+    height: 260px;
+    border-radius: var(--pw-radius);
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--pw-primary), #7C8CFF);
+    margin-bottom: 20px;
+}
+
+    .pw-course-banner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+.pw-course-body {
+    padding: 22px;
+}
+
+.pw-course-category {
+    color: var(--pw-primary-dark);
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.pw-course-price {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    color: var(--pw-ink);
+}
+
+/* ---------------------------------------------------------------------
+   Testimonials
+   --------------------------------------------------------------------- */
+.pw-testimonial {
+    background: var(--pw-bg-tint);
+    border-radius: var(--pw-radius);
+    padding: 26px;
+    height: 100%;
+}
+
+.pw-testimonial-quote {
+    font-size: 2.4rem;
+    color: var(--pw-primary);
+    line-height: 1;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.pw-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--pw-primary);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+/* ---------------------------------------------------------------------
+   Footer CTA with giant wordmark
+   --------------------------------------------------------------------- */
+.pw-footer {
+    background: var(--pw-navy);
+    color: #C7CCEF;
+    padding-top: 64px;
+}
+
+    .pw-footer h2 {
+        color: white;
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+    }
+
+    .pw-footer a {
+        color: #C7CCEF;
+    }
+
+        .pw-footer a:hover {
+            color: white;
+        }
+
+.pw-footer-links {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+}
+
+.pw-wordmark {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3.5rem, 14vw, 9rem);
+    color: var(--pw-navy-soft);
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    -webkit-text-stroke: 1px #2A3268;
+    text-align: center;
+    padding: 24px 0 8px;
+    user-select: none;
+}
+
+.pw-footer-bottom {
+    border-top: 1px solid #262D5C;
+    padding: 18px 0;
+    font-size: 0.85rem;
+    color: #8791C7;
+}
+
+/* ---------------------------------------------------------------------
+   Inner-page shell (used by every page except Home, which manages its
+   own full-bleed sections)
+   --------------------------------------------------------------------- */
+.pw-page {
+    width: 100%;
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 40px 24px 64px;
+}
+
+@media (max-width: 576px) {
+    .pw-page {
+        padding: 24px 16px 40px;
+    }
+}
+
+.pw-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+    .pw-page-header h2 {
+        margin-bottom: 4px;
+    }
+
+    .pw-page-header .pw-subtitle {
+        color: var(--pw-slate);
+        margin-bottom: 0;
+    }
+
+/* Generic content card wrapper for tables/forms/detail blocks */
+.pw-card {
+    background: var(--pw-white);
+    border: 1px solid var(--pw-border);
+    border-radius: var(--pw-radius);
+    padding: 28px;
+}
+
+    .pw-card + .pw-card {
+        margin-top: 20px;
+    }
+
+/* Alerts */
+.alert {
+    border-radius: var(--pw-radius-sm);
+    border: none;
+    font-weight: 500;
+}
+
+.alert-success {
+    background: #E7F8ED;
+    color: #157347;
+}
+
+.alert-danger {
+    background: #FDECEC;
+    color: #B42318;
+}
+
+.alert-warning {
+    background: #FFF6E5;
+    color: #92650A;
+}
+
+/* Tables inside a pw-card */
+.pw-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+    .pw-table thead th {
+        text-align: left;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--pw-slate);
+        font-weight: 700;
+        border-bottom: 1px solid var(--pw-border);
+        padding: 0 12px 12px;
+    }
+
+    .pw-table tbody td {
+        padding: 14px 12px;
+        border-bottom: 1px solid var(--pw-border);
+        vertical-align: middle;
+    }
+
+    .pw-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .pw-table tbody tr:hover {
+        background: var(--pw-bg-tint);
+    }
+
+/* Role / status badges */
+.pw-badge {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 4px 12px;
+    border-radius: 999px;
+}
+
+.pw-badge-admin {
+    background: #FDECEC;
+    color: #B42318;
+}
+
+.pw-badge-instructor {
+    background: var(--pw-primary-tint);
+    color: var(--pw-primary-dark);
+}
+
+.pw-badge-student {
+    background: #E7F8ED;
+    color: #157347;
+}
+
+/* Progress bar (course completion) */
+.pw-progress-track {
+    width: 100%;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--pw-border);
+    overflow: hidden;
+}
+
+.pw-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--pw-primary), var(--pw-green));
+    border-radius: 999px;
+}
+
+.pw-progress-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--pw-slate);
+    white-space: nowrap;
+}
+
+/* Small avatar used in navbar / lists (initials-based, no upload needed) */
+.pw-avatar-sm {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pw-primary), #7C8CFF);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.pw-avatar-lg {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pw-primary), #7C8CFF);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+}
+
+.pw-user-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px 4px 4px;
+    border-radius: 999px;
+    color: var(--pw-ink) !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.15s ease;
+}
+
+    .pw-user-chip:hover {
+        background: var(--pw-bg-tint);
+    }
+
+/* Forms */
+.pw-card label {
+    font-weight: 600;
+    font-size: 0.88rem;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.pw-card .form-control,
+.pw-card .form-select,
+.pw-card textarea {
+    border-radius: var(--pw-radius-sm);
+    border: 1.5px solid var(--pw-border);
+    padding: 10px 14px;
+}
+
+    .pw-card .form-control:focus,
+    .pw-card .form-select:focus {
+        border-color: var(--pw-primary);
+        box-shadow: 0 0 0 3px var(--pw-primary-tint);
+    }
+
+/* Empty state */
+.pw-empty {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--pw-slate);
+}
+
+/* Course content accordion (sections as dropdowns) */
+.pw-accordion-item {
+    border: 1px solid var(--pw-border) !important;
+    border-radius: var(--pw-radius-sm) !important;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.pw-accordion-button {
+    font-weight: 700;
+    background: var(--pw-white) !important;
+    color: var(--pw-ink) !important;
+    box-shadow: none !important;
+}
+
+    .pw-accordion-button:not(.collapsed) {
+        background: var(--pw-primary-tint) !important;
+        color: var(--pw-primary-dark) !important;
+    }
+
+    .pw-accordion-button:focus {
+        box-shadow: 0 0 0 3px var(--pw-primary-tint) !important;
+    }
+
+.accordion-item:last-of-type {
+    margin-bottom: 0;
+}
+
+/* Stat mini-cards reused outside the dark stats band (e.g. dashboards) */
+.pw-mini-stat {
+    background: var(--pw-bg-tint);
+    border: 1px solid var(--pw-border);
+    border-radius: var(--pw-radius);
+    padding: 20px;
+    text-align: center;
+}
+
+    .pw-mini-stat .value {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--pw-ink);
+    }
+
+    .pw-mini-stat .label {
+        color: var(--pw-slate);
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+/* ---------------------------------------------------------------------
+   Responsive
+   --------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .pw-hero {
+        padding: 48px 0 32px;
+        text-align: center;
+    }
+
+        .pw-hero p.lead {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    .pw-stats {
+        text-align: center;
+    }
+
+    .pw-footer-links {
+        justify-content: center;
+    }
+
+    .pw-card {
+        padding: 20px;
+    }
+}

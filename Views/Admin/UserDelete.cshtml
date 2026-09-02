@@ -1,0 +1,36 @@
+@model Pathway.ViewModels.AdminUserDetailsViewModel
+
+@{
+    ViewData["Title"] = "Delete User";
+}
+
+<div class="pw-page">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="pw-page-header">
+                <div>
+                    <h2>Delete User</h2>
+                </div>
+            </div>
+
+            <div class="pw-card">
+                <p>Are you sure you want to delete <strong>@Model.Name</strong> (@Model.Email)?</p>
+
+                @if ((Model.Role == "Instructor" && Model.Courses.Any()) || (Model.Role == "Student" && Model.Enrollments.Any()))
+                {
+                    <div class="alert alert-warning mb-0">
+                        This user still has linked data (courses or enrollments) and cannot be deleted until that data is removed or reassigned.
+                    </div>
+                }
+                else
+                {
+                    <form asp-action="UserDelete" asp-route-id="@Model.UserId" method="post" class="d-flex gap-2">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="pw-btn pw-btn-danger">Yes, Delete</button>
+                        <a asp-action="Users" class="pw-btn pw-btn-ghost">Cancel</a>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>

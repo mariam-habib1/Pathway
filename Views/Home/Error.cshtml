@@ -1,0 +1,19 @@
+@model Pathway.Models.ErrorViewModel
+
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="pw-page">
+    <div class="pw-empty">
+        <h2>Something went wrong</h2>
+        <p>An error occurred while processing your request.</p>
+
+        @if (Model.ShowRequestId)
+        {
+            <p class="pw-mono small">Request ID: @Model.RequestId</p>
+        }
+
+        <a asp-controller="Home" asp-action="Index" class="pw-btn pw-btn-primary mt-2">Back to home</a>
+    </div>
+</div>

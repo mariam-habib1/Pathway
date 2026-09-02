@@ -1,0 +1,127 @@
+@model Pathway.ViewModels.CourseDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="pw-page">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success mb-3">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger mb-3">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            @if (!string.IsNullOrWhiteSpace(Model.ThumbnailUrl))
+            {
+                <div class="pw-course-banner">
+                    <img src="@Model.ThumbnailUrl" alt="@Model.Title" />
+                </div>
+            }
+            <div class="pw-course-category mb-2">@Model.CategoryName</div>
+            <h2>@Model.Title</h2>
+            <p class="text-muted">by @Model.InstructorName · created @Model.CreatedAt.ToString("dd MMM yyyy")</p>
+            <p>@Model.Description</p>
+
+            <div class="pw-card mt-4">
+                <h5 class="mb-3">Course Content</h5>
+                @if (!Model.Sections.Any())
+                {
+                    <div class="pw-empty">No sections added yet.</div>
+                }
+                else
+                {
+                    <div class="accordion" id="courseContentAccordion">
+                        @foreach (var section in Model.Sections)
+                        {
+                            var collapseId = $"section-{section.SectionId}";
+                            <div class="accordion-item pw-accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed pw-accordion-button" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#@collapseId">
+                                        @(section.Order). @(section.Title)
+                                        <span class="text-muted small ms-2">(@(section.LessonCount) lesson(s))</span>
+                                    </button>
+                                </h2>
+                                <div id="@collapseId" class="accordion-collapse collapse" data-bs-parent="#courseContentAccordion">
+                                    <div class="accordion-body p-0">
+                                        @if (Model.CanViewContent)
+                                        {
+                                            @if (!section.Lessons.Any())
+                                            {
+                                                <p class="text-muted px-3 py-2 mb-0">No lessons in this section yet.</p>
+                                            }
+                                            else
+                                            {
+                                                <ul class="list-unstyled mb-0">
+                                                    @foreach (var lesson in section.Lessons)
+                                                    {
+                                                        <li class="border-top">
+                                                            <a asp-controller="Lessons" asp-action="Details" asp-route-id="@lesson.LessonId"
+                                                               class="d-block px-3 py-2 text-decoration-none">
+                                                                @lesson.Order. @lesson.Title
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p class="text-muted px-3 py-2 mb-0">Enroll in this course to view lesson titles and content.</p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="pw-card">
+                <div class="pw-course-price fs-3 mb-3">@Model.Price.ToString("C")</div>
+                <p class="text-muted small mb-3">@Model.EnrollmentCount student(s) enrolled</p>
+
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    @if (User.IsInRole("Student"))
+                    {
+                        @if (Model.IsEnrolled)
+                        {
+                            <button type="button" class="pw-btn pw-btn-ghost w-100" disabled>Already Enrolled</button>
+                        }
+                        else
+                        {
+                            <form asp-controller="Enrollments" asp-action="Enroll" asp-route-courseId="@Model.CourseId" method="post">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="pw-btn pw-btn-primary w-100">Enroll in this Course</button>
+                            </form>
+                        }
+                    }
+                    else if (User.IsInRole("Instructor") &&
+                        int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)!.Value) == Model.InstructorId)
+                    {
+                        <div class="d-grid gap-2">
+                            <a asp-action="Edit" asp-route-id="@Model.CourseId" class="pw-btn pw-btn-ghost">Edit Course</a>
+                            <a asp-controller="CourseSections" asp-action="Course" asp-route-courseId="@Model.CourseId" class="pw-btn pw-btn-primary">Manage Sections</a>
+                            <a asp-action="Delete" asp-route-id="@Model.CourseId" class="pw-btn pw-btn-danger">Delete Course</a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="pw-btn pw-btn-primary w-100">Log in to Enroll</a>
+                }
+            </div>
+        </div>
+    </div>
+
+    <a asp-action="Index" class="pw-btn pw-btn-ghost mt-4">← Back to Courses</a>
+</div>
+

@@ -1,0 +1,56 @@
+@model Pathway.ViewModels.CourseDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="pw-page">
+    <div class="pw-page-header">
+        <div>
+            <h2>@Model.Title</h2>
+            <p class="pw-subtitle">@Model.CategoryName · by @Model.InstructorName</p>
+        </div>
+    </div>
+
+    <div class="pw-card">
+        <p>@Model.Description</p>
+
+        <dl class="row mb-0">
+            <dt class="col-sm-3 text-muted">Price</dt>
+            <dd class="col-sm-9">@Model.Price.ToString("C")</dd>
+
+            <dt class="col-sm-3 text-muted">Created</dt>
+            <dd class="col-sm-9">@Model.CreatedAt.ToString("dd MMM yyyy")</dd>
+
+            <dt class="col-sm-3 text-muted">Enrolled Students</dt>
+            <dd class="col-sm-9">@Model.EnrollmentCount</dd>
+        </dl>
+    </div>
+
+    <h4 class="mt-4 mb-3">Course Content</h4>
+    @if (!Model.Sections.Any())
+    {
+        <div class="pw-empty">No sections added yet.</div>
+    }
+    else
+    {
+        <div class="pw-card">
+            @foreach (var section in Model.Sections)
+            {
+                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                    <span>@(section.Order). @(section.Title)</span>
+                    <span class="text-muted small">@(section.LessonCount) lesson(s)</span>
+                </div>
+            }
+        </div>
+    }
+
+    <div class="d-flex gap-2 mt-4">
+        <form asp-action="CourseDelete" asp-route-id="@Model.CourseId" method="post"
+              onsubmit="return confirm('Delete this course and all its sections/lessons/enrollments?');">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="pw-btn pw-btn-danger">Delete Course</button>
+        </form>
+        <a asp-action="Courses" class="pw-btn pw-btn-ghost">← Back to Courses</a>
+    </div>
+</div>

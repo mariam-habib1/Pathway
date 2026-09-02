@@ -1,0 +1,55 @@
+@model List<Pathway.ViewModels.CategoryViewModel>
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<div class="pw-page">
+    <div class="pw-page-header">
+        <div>
+            <h2>Categories</h2>
+            <p class="pw-subtitle">Browse courses by subject.</p>
+        </div>
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Create" class="pw-btn pw-btn-primary">+ New Category</a>
+        }
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success mb-3">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger mb-3">@TempData["ErrorMessage"]</div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="pw-empty">No categories yet.</div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var category in Model)
+            {
+                <div class="col-md-4">
+                    <div class="pw-card h-100 d-flex flex-column">
+                        <h5 class="mb-2">@category.Name</h5>
+                        <p class="text-muted flex-grow-1">@category.Description</p>
+                        <p class="pw-mono text-muted small mb-3">@category.CourseCount course(s)</p>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a asp-action="Details" asp-route-id="@category.CategoryId" class="pw-btn pw-btn-primary pw-btn-sm">View Courses</a>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@category.CategoryId" class="pw-btn pw-btn-ghost pw-btn-sm">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@category.CategoryId" class="pw-btn pw-btn-danger pw-btn-sm">Delete</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

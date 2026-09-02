@@ -1,0 +1,59 @@
+@model List<Pathway.ViewModels.CourseViewModel>
+
+@{
+    ViewData["Title"] ??= "Courses";
+}
+
+<div class="pw-page">
+    <div class="pw-page-header">
+        <div>
+            <h2>@ViewData["Title"]</h2>
+            <p class="pw-subtitle">@Model.Count course(s) available</p>
+        </div>
+        @if (User.IsInRole("Instructor"))
+        {
+            <a asp-action="Create" class="pw-btn pw-btn-primary">+ New Course</a>
+        }
+    </div>
+
+    <form asp-action="Search" method="get" class="d-flex gap-2 mb-4" style="max-width: 420px;">
+        <input type="text" name="keyword" class="form-control" placeholder="Search courses..." value="@ViewData["Keyword"]" />
+        <button type="submit" class="pw-btn pw-btn-ghost">Search</button>
+    </form>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success mb-3">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="pw-empty">No courses found.</div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var course in Model)
+            {
+                <div class="col-md-4">
+                    <a asp-action="Details" asp-route-id="@course.CourseId" class="text-decoration-none">
+                        <div class="pw-course-card">
+                            <div class="pw-course-image">
+                                @if (!string.IsNullOrWhiteSpace(course.ThumbnailUrl))
+                                {
+                                    <img src="@course.ThumbnailUrl" alt="@course.Title" />
+                                }
+                            </div>
+                            <div class="pw-course-body">
+                                <div class="pw-course-category">@course.CategoryName</div>
+                                <h5 class="mt-1 mb-2">@course.Title</h5>
+                                <p class="text-muted small mb-3">by @course.InstructorName</p>
+                                <div class="pw-course-price">@course.Price.ToString("C")</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,47 @@
+@model Pathway.ViewModels.CategoryDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="pw-page">
+    <div class="pw-page-header">
+        <div>
+            <h2>@Model.Name</h2>
+            <p class="pw-subtitle">@Model.Description</p>
+        </div>
+    </div>
+
+    @if (!Model.Courses.Any())
+    {
+        <div class="pw-empty">No courses in this category yet.</div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var course in Model.Courses)
+            {
+                <div class="col-md-4">
+                    <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.CourseId" class="text-decoration-none">
+                        <div class="pw-course-card">
+                            <div class="pw-course-image">
+                                @if (!string.IsNullOrWhiteSpace(course.ThumbnailUrl))
+                                {
+                                    <img src="@course.ThumbnailUrl" alt="@course.Title" />
+                                }
+                            </div>
+                            <div class="pw-course-body">
+                                <div class="pw-course-category">@Model.Name</div>
+                                <h5 class="mt-1 mb-2">@course.Title</h5>
+                                <p class="text-muted small mb-3">by @course.InstructorName</p>
+                                <div class="pw-course-price">@course.Price.ToString("C")</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+
+    <a asp-action="Index" class="pw-btn pw-btn-ghost mt-4">← Back to Categories</a>
+</div>
