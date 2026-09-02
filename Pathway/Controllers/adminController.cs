@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Pathway.Common;
 using Pathway.Data;
+using Pathway.Models;
 using Pathway.ViewModels.Admin;
 
 namespace Pathway.Controllers
 {
-    [Authorize(Roles = Roles.Admin)]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly AppDbContext _context;
@@ -17,13 +17,25 @@ namespace Pathway.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        // GET: /Admin
         public IActionResult Index()
         {
             return View();
         }
 
-        [HttpGet]
+        // GET: /Admin/Statistics
+        public async Task<IActionResult> Statistics()
+        {
+            ViewBag.UsersCount = await _context.Users.CountAsync();
+            ViewBag.CoursesCount = await _context.Courses.CountAsync();
+            ViewBag.CategoriesCount = await _context.Categories.CountAsync();
+            ViewBag.EnrollmentsCount = await _context.Enrollments.CountAsync();
+            return View();
+        }
+
+        // ================= USERS =================
+
+        // GET: /Admin/Users
         public async Task<IActionResult> Users()
         {
             var users = await _context.Users
@@ -41,17 +53,13 @@ namespace Pathway.Controllers
             return View(users);
         }
 
-        [HttpGet]
+        // GET: /Admin/UserDetails/5
         public async Task<IActionResult> UserDetails(int id)
         {
             var user = await _context.Users.FindAsync(id);
+            if (user == null) return NotFound();
 
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            var viewModel = new UserListItemViewModel
+            var model = new UserListItemViewModel
             {
                 UserId = user.UserId,
                 Name = user.Name,
@@ -60,20 +68,16 @@ namespace Pathway.Controllers
                 CreatedAt = user.CreatedAt
             };
 
-            return View(viewModel);
+            return View(model);
         }
 
-        [HttpGet]
+        // GET: /Admin/EditUser/5
         public async Task<IActionResult> EditUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
+            if (user == null) return NotFound();
 
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            var viewModel = new EditUserViewModel
+            var model = new EditUserViewModel
             {
                 UserId = user.UserId,
                 Name = user.Name,
@@ -81,81 +85,99 @@ namespace Pathway.Controllers
                 Role = user.Role
             };
 
-            return View(viewModel);
+            return View(model);
         }
 
+        // POST: /Admin/EditUser
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditUser(int id, EditUserViewModel model)
+        public async Task<IActionResult> EditUser(EditUserViewModel model)
         {
-            if (id != model.UserId)
-            {
-                return NotFound();
-            }
-
-            var allowedRoles = new[] { Roles.Admin, Roles.Instructor, Roles.Student };
-            if (!allowedRoles.Contains(model.Role))
-            {
-                ModelState.AddModelError("Role", "الدور المحدد غير صحيح");
-            }
-
             if (!ModelState.IsValid)
-            {
                 return View(model);
-            }
 
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
+            var user = await _context.Users.FindAsync(model.UserId);
+            if (user == null) return NotFound();
 
-            var normalizedEmail = model.Email.Trim().ToLower();
-
-            var emailTaken = await _context.Users
-                .AnyAsync(u => u.UserId != id && u.Email.ToLower() == normalizedEmail);
-
-            if (emailTaken)
-            {
-                ModelState.AddModelError("Email", "البريد الإلكتروني مستخدم بالفعل لمستخدم آخر");
-                return View(model);
-            }
-
-            user.Name = model.Name.Trim();
-            user.Email = normalizedEmail;
+            user.Name = model.Name;
+            user.Email = model.Email;
             user.Role = model.Role;
 
             await _context.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = "تم تعديل بيانات المستخدم بنجاح";
-            return RedirectToAction("Users");
+            TempData["SuccessMessage"] = "User updated successfully.";
+            return RedirectToAction(nameof(Users));
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        // GET: /Admin/DeleteUser/5
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
+            if (user == null) return NotFound();
 
-            if (user == null)
+            return View(user);
+        }
+
+        // POST: /Admin/DeleteUserConfirmed/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteUserConfirmed(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user != null)
             {
-                return NotFound();
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "User deleted successfully.";
             }
 
-            var hasCourses = await _context.Courses.AnyAsync(c => c.InstructorId == id);
-            var hasEnrollments = await _context.Enrollments.AnyAsync(e => e.StudentId == id);
+            return RedirectToAction(nameof(Users));
+        }
 
-            if (hasCourses || hasEnrollments)
+        // ================= COURSES =================
+
+        // GET: /Admin/Courses
+        public async Task<IActionResult> Courses()
+        {
+            var courses = await _context.Courses
+                .OrderByDescending(c => c.CreatedAt)
+                .ToListAsync();
+
+            return View(courses);
+        }
+
+        // GET: /Admin/CourseDetails/5
+        public async Task<IActionResult> CourseDetails(int id)
+        {
+            var course = await _context.Courses.FindAsync(id);
+            if (course == null) return NotFound();
+
+            return View(course);
+        }
+
+        // GET: /Admin/DeleteCourse/5
+        public async Task<IActionResult> DeleteCourse(int id)
+        {
+            var course = await _context.Courses.FindAsync(id);
+            if (course == null) return NotFound();
+
+            return View(course);
+        }
+
+        // POST: /Admin/DeleteCourseConfirmed/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteCourseConfirmed(int id)
+        {
+            var course = await _context.Courses.FindAsync(id);
+            if (course != null)
             {
-                TempData["ErrorMessage"] = "لا يمكن حذف هذا المستخدم لأنه مرتبط بكورسات أو تسجيلات. يمكنك تعديل بياناته بدلاً من حذفه.";
-                return RedirectToAction("Users");
+                _context.Courses.Remove(course);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Course deleted successfully.";
             }
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            TempData["SuccessMessage"] = "تم حذف المستخدم بنجاح";
-            return RedirectToAction("Users");
+            return RedirectToAction(nameof(Courses));
         }
     }
 }

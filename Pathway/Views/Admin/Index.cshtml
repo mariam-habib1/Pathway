@@ -1,18 +1,36 @@
 ﻿@{
-    ViewData["Title"] = "لوحة تحكم الأدمن";
+    ViewData["Title"] = "Admin Dashboard";
 }
 
 <div class="mt-4">
-    <h2 class="mb-4">لوحة تحكم الأدمن</h2>
-    <p class="text-muted">مرحبًا بك في لوحة التحكم. من هنا يمكنك إدارة حسابات المستخدمين في المنصة.</p>
+    <h2 class="mb-4">Admin Dashboard</h2>
+    <p class="text-muted">Welcome to the control panel. From here you can manage the platform's users, courses, and view statistics.</p>
 
-    <div class="row mt-4">
+    <div class="row mt-4 g-4">
         <div class="col-md-4">
-            <div class="card">
-                <div class="card-body text-center">
-                    <h5 class="card-title">إدارة المستخدمين</h5>
-                    <p class="card-text">عرض وتعديل وحذف حسابات المستخدمين.</p>
-                    <a asp-controller="Admin" asp-action="Users" class="btn btn-primary">الانتقال</a>
+            <div class="card h-100 shadow-sm border-0 text-center p-3">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Users</h5>
+                    <p class="card-text text-muted">View, edit, and delete user accounts.</p>
+                    <a asp-controller="Admin" asp-action="Users" class="btn btn-primary">Go to Users</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 text-center p-3">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Courses</h5>
+                    <p class="card-text text-muted">View and remove courses on the platform.</p>
+                    <a asp-controller="Admin" asp-action="Courses" class="btn btn-primary">Go to Courses</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 text-center p-3">
+                <div class="card-body">
+                    <h5 class="card-title">Statistics</h5>
+                    <p class="card-text text-muted">See platform-wide numbers at a glance.</p>
+                    <a asp-controller="Admin" asp-action="Statistics" class="btn btn-primary">View Statistics</a>
                 </div>
             </div>
         </div>

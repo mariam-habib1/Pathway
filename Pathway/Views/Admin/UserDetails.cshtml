@@ -1,33 +1,28 @@
 ﻿@model Pathway.ViewModels.Admin.UserListItemViewModel
 
 @{
-    ViewData["Title"] = "تفاصيل المستخدم";
+    ViewData["Title"] = "User Details";
 }
 
-<div class="row justify-content-center mt-5">
-    <div class="col-md-6">
-        <h2 class="mb-4">تفاصيل المستخدم</h2>
+<h2 class="mb-4">User Details</h2>
 
-        <table class="table table-bordered">
-            <tr>
-                <th>الاسم</th>
-                <td>@Model.Name</td>
-            </tr>
-            <tr>
-                <th>البريد الإلكتروني</th>
-                <td>@Model.Email</td>
-            </tr>
-            <tr>
-                <th>الدور</th>
-                <td>@Model.Role</td>
-            </tr>
-            <tr>
-                <th>تاريخ التسجيل</th>
-                <td>@Model.CreatedAt.ToString("yyyy-MM-dd")</td>
-            </tr>
-        </table>
+<div class="card shadow-sm border-0 p-4" style="max-width: 500px;">
+    <dl class="row mb-0">
+        <dt class="col-sm-4">Name</dt>
+        <dd class="col-sm-8">@Model.Name</dd>
 
-        <a asp-controller="Admin" asp-action="EditUser" asp-route-id="@Model.UserId" class="btn btn-warning">تعديل</a>
-        <a asp-controller="Admin" asp-action="Users" class="btn btn-secondary">الرجوع لقائمة المستخدمين</a>
-    </div>
+        <dt class="col-sm-4">Email</dt>
+        <dd class="col-sm-8">@Model.Email</dd>
+
+        <dt class="col-sm-4">Role</dt>
+        <dd class="col-sm-8">@Model.Role</dd>
+
+        <dt class="col-sm-4">Joined</dt>
+        <dd class="col-sm-8">@Model.CreatedAt.ToString("yyyy-MM-dd")</dd>
+    </dl>
+</div>
+
+<div class="mt-4">
+    <a asp-controller="Admin" asp-action="EditUser" asp-route-id="@Model.UserId" class="btn btn-warning">Edit</a>
+    <a asp-controller="Admin" asp-action="Users" class="btn btn-outline-secondary">Back to Users</a>
 </div>

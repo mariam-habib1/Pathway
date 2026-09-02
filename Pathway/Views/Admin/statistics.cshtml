@@ -2,145 +2,57 @@
     ViewData["Title"] = "Statistics";
 }
 
-<div class="admin-page">
+<h2 class="mb-1">Platform Statistics</h2>
+<p class="text-muted mb-4">Overview of the Pathway learning platform.</p>
 
-    <div class="page-header">
-
-        <div>
-
-            <span class="dashboard-badge">
-                ANALYTICS
-            </span>
-
-            <h1>
-                Platform Statistics
-            </h1>
-
-            <p>
-                Overview of the Pathway learning platform.
-            </p>
-
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card text-center p-4 shadow-sm border-0">
+            <div class="fs-2 mb-2">👥</div>
+            <h3>@ViewBag.UsersCount</h3>
+            <p class="text-muted mb-0">Total Users</p>
         </div>
-
     </div>
-
-
-    <div class="stats-grid">
-
-        <div class="stat-box">
-
-            <div class="stat-icon">
-                👥
-            </div>
-
-            <h2>
-                @ViewBag.UsersCount
-            </h2>
-
-            <p>
-                Total Users
-            </p>
-
+    <div class="col-md-3">
+        <div class="card text-center p-4 shadow-sm border-0">
+            <div class="fs-2 mb-2">📚</div>
+            <h3>@ViewBag.CoursesCount</h3>
+            <p class="text-muted mb-0">Total Courses</p>
         </div>
-
-
-        <div class="stat-box">
-
-            <div class="stat-icon">
-                📚
-            </div>
-
-            <h2>
-                @ViewBag.CoursesCount
-            </h2>
-
-            <p>
-                Total Courses
-            </p>
-
-        </div>
-
-
-        <div class="stat-box">
-
-            <div class="stat-icon">
-                🏷️
-            </div>
-
-            <h2>
-                @ViewBag.CategoriesCount
-            </h2>
-
-            <p>
-                Total Categories
-            </p>
-
-        </div>
-
-
-        <div class="stat-box">
-
-            <div class="stat-icon">
-                🎓
-            </div>
-
-            <h2>
-                @ViewBag.EnrollmentsCount
-            </h2>
-
-            <p>
-                Total Enrollments
-            </p>
-
-        </div>
-
     </div>
-
-
-    <div class="analytics-card">
-
-        <div>
-
-            <span class="dashboard-badge">
-                PLATFORM OVERVIEW
-            </span>
-
-            <h2>
-                Pathway at a glance
-            </h2>
-
-            <p>
-                These numbers represent the current
-                data stored in the platform.
-            </p>
-
+    <div class="col-md-3">
+        <div class="card text-center p-4 shadow-sm border-0">
+            <div class="fs-2 mb-2">🏷️</div>
+            <h3>@ViewBag.CategoriesCount</h3>
+            <p class="text-muted mb-0">Total Categories</p>
         </div>
-
-
-        <div class="analytics-list">
-
-            <div>
-                <span>Users</span>
-                <strong>@ViewBag.UsersCount</strong>
-            </div>
-
-            <div>
-                <span>Courses</span>
-                <strong>@ViewBag.CoursesCount</strong>
-            </div>
-
-            <div>
-                <span>Categories</span>
-                <strong>@ViewBag.CategoriesCount</strong>
-            </div>
-
-            <div>
-                <span>Enrollments</span>
-                <strong>@ViewBag.EnrollmentsCount</strong>
-            </div>
-
-        </div>
-
     </div>
+    <div class="col-md-3">
+        <div class="card text-center p-4 shadow-sm border-0">
+            <div class="fs-2 mb-2">🎓</div>
+            <h3>@ViewBag.EnrollmentsCount</h3>
+            <p class="text-muted mb-0">Total Enrollments</p>
+        </div>
+    </div>
+</div>
 
+<div class="card shadow-sm border-0 p-4">
+    <span class="badge mb-2 align-self-start" style="background-color: var(--primary); color:white;">PLATFORM OVERVIEW</span>
+    <h4>Pathway at a glance</h4>
+    <p class="text-muted">These numbers represent the current data stored in the platform.</p>
+
+    <ul class="list-group list-group-flush mt-3">
+        <li class="list-group-item d-flex justify-content-between">
+            <span>Users</span><strong>@ViewBag.UsersCount</strong>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+            <span>Courses</span><strong>@ViewBag.CoursesCount</strong>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+            <span>Categories</span><strong>@ViewBag.CategoriesCount</strong>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+            <span>Enrollments</span><strong>@ViewBag.EnrollmentsCount</strong>
+        </li>
+    </ul>
 </div>
