@@ -2,26 +2,65 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="hero">
-    <h1 class="display-5 fw-bold">Learn new skills, anytime, anywhere</h1>
-    <p class="lead">Explore courses taught by expert instructors and grow your career with Pathway.</p>
-    <a asp-controller="Courses" asp-action="Index" class="btn btn-light btn-lg mt-3">Browse Courses</a>
+<div class="hero" style="position: relative; overflow: hidden; padding: 60px 40px;">
+    <div style="position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; background: rgba(255,255,255,0.08); border-radius: 50%;"></div>
+    <div style="position: absolute; bottom: -80px; left: -40px; width: 260px; height: 260px; background: rgba(255,255,255,0.06); border-radius: 50%;"></div>
+
+    <div class="row align-items-center" style="position: relative; z-index: 1;">
+        <div class="col-lg-6">
+            <span class="badge mb-3" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; font-weight: 500;">🎓 Start learning today</span>
+            <h1 class="display-5 fw-bold">Learn new skills, anytime, anywhere</h1>
+            <p class="lead">Explore courses taught by expert instructors and grow your career with Pathway.</p>
+            <div class="d-flex gap-3 mt-4 flex-wrap">
+                <a asp-controller="Courses" asp-action="Index" class="btn btn-light btn-lg px-4">Browse Courses</a>
+                @if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Account" asp-action="Register" class="btn btn-outline-light btn-lg px-4">Get Started Free</a>
+                }
+            </div>
+        </div>
+        <div class="col-lg-6 d-none d-lg-block text-center">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=450&fit=crop"
+                 class="img-fluid rounded-4 shadow" style="max-height: 320px; object-fit: cover;" alt="Students learning" />
+        </div>
+    </div>
 </div>
 
-<div class="row text-center mb-5">
+<div class="row g-4 my-5">
     <div class="col-md-4">
-        <h3>📚</h3>
-        <h5>Wide Range of Courses</h5>
-        <p class="text-muted">From web development to cybersecurity and AI.</p>
+        <div class="card h-100 shadow-sm border-0 text-center p-4">
+            <div class="mx-auto mb-3 d-flex align-items-center justify-content-center"
+                 style="width: 64px; height: 64px; border-radius: 50%; background: rgba(74,71,163,0.1); font-size: 1.6rem;">
+                📚
+            </div>
+            <h5>Wide Range of Courses</h5>
+            <p class="text-muted mb-0">From web development to cybersecurity and AI.</p>
+        </div>
     </div>
     <div class="col-md-4">
-        <h3>🎓</h3>
-        <h5>Expert Instructors</h5>
-        <p class="text-muted">Learn from people who work in the field.</p>
+        <div class="card h-100 shadow-sm border-0 text-center p-4">
+            <div class="mx-auto mb-3 d-flex align-items-center justify-content-center"
+                 style="width: 64px; height: 64px; border-radius: 50%; background: rgba(255,122,89,0.15); font-size: 1.6rem;">
+                🎓
+            </div>
+            <h5>Expert Instructors</h5>
+            <p class="text-muted mb-0">Learn from people who work in the field.</p>
+        </div>
     </div>
     <div class="col-md-4">
-        <h3>📈</h3>
-        <h5>Track Your Progress</h5>
-        <p class="text-muted">Stay motivated as you complete each course.</p>
+        <div class="card h-100 shadow-sm border-0 text-center p-4">
+            <div class="mx-auto mb-3 d-flex align-items-center justify-content-center"
+                 style="width: 64px; height: 64px; border-radius: 50%; background: rgba(74,71,163,0.1); font-size: 1.6rem;">
+                📈
+            </div>
+            <h5>Track Your Progress</h5>
+            <p class="text-muted mb-0">Stay motivated as you complete each course.</p>
+        </div>
     </div>
+</div>
+
+<div class="card shadow-sm border-0 p-5 text-center mb-5" style="background: linear-gradient(135deg, #F7F7FB, #ffffff);">
+    <h3 class="mb-2">Ready to start your journey?</h3>
+    <p class="text-muted mb-4">Join thousands of learners building new skills every day.</p>
+    <a asp-controller="Courses" asp-action="Index" class="btn btn-primary btn-lg px-5 mx-auto" style="width: fit-content;">Explore All Courses</a>
 </div>
